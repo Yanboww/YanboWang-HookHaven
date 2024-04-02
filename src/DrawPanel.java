@@ -20,12 +20,12 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
         replaceButton = new Rectangle(162, 280, 160, 26);
         button = new Rectangle(162, 240, 160, 26);
         this.addMouseListener(this);
-        this.addMouseListener(this);
+        setFocusable(true);
+        this.addKeyListener(this);
     }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
     }
 
     public void mousePressed(MouseEvent e) {
@@ -36,6 +36,18 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
         }
 
     }
+    public void keyPressed(KeyEvent e)
+    {
+        if (e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT)
+        {
+
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT)
+        {
+
+        }
+    }
+
 
     public void mouseReleased(MouseEvent e) { }
     public void mouseEntered(MouseEvent e) { }
