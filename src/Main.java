@@ -1,5 +1,5 @@
 public class Main {
     public static void main(String[] args) {
-        MainFrame frame = new MainFrame("TSD");
+        MainFrame frame = new MainFrame("Hook Haven");
     }
 }
