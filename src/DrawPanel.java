@@ -10,20 +10,15 @@ import java.util.ArrayList;
 import java.awt.Font;
 
 class DrawPanel extends JPanel implements MouseListener, KeyListener {
-
-
-    private Rectangle button;
-
-    private Rectangle replaceButton;
     private Background currentBackground;
+    private ArrayList<Button> currentButtons;
 
     public DrawPanel() {
-        replaceButton = new Rectangle(162, 280, 160, 26);
-        button = new Rectangle(162, 240, 160, 26);
         currentBackground = new Background("menu.jpg");
         this.addMouseListener(this);
         setFocusable(true);
         this.addKeyListener(this);
+        currentButtons = Button.getButtons(currentBackground);
     }
 
     protected void paintComponent(Graphics g) {
@@ -36,7 +31,17 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
         Point clicked = e.getPoint();
         if (e.getButton() == 1) {
-
+            for(Button clickedButtons : currentButtons)
+            {
+                if(clickedButtons.getButton().contains(clicked))
+                {
+                    String name = clickedButtons.getName();
+                    if(name.equals("Play"))
+                    {
+                        currentBackground = new Background("Ocean");
+                    }
+                }
+            }
         }
 
     }
@@ -51,7 +56,6 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
         }
     }
-
 
     public void mouseReleased(MouseEvent e) { }
     public void mouseEntered(MouseEvent e) { }
