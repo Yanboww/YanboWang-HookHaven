@@ -20,7 +20,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
     public DrawPanel() {
         replaceButton = new Rectangle(162, 280, 160, 26);
         button = new Rectangle(162, 240, 160, 26);
-        currentBackground = new Background("menu");
+        currentBackground = new Background("menu.jpg");
         this.addMouseListener(this);
         setFocusable(true);
         this.addKeyListener(this);
@@ -28,14 +28,15 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(currentBackground.getImage(),0,0,null);
+        g.drawImage(currentBackground.getImage(), 0, 0, getWidth(), getHeight(), this);
+
     }
 
     public void mousePressed(MouseEvent e) {
 
         Point clicked = e.getPoint();
         if (e.getButton() == 1) {
-            System.out.println("SSSS");
+
         }
 
     }

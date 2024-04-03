@@ -13,7 +13,7 @@ public class MainFrame extends JFrame implements Runnable {
         this.add(p);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(frameWidth, frameHeight);
-        this.setLocation(600, 100);
+        this.setLocation(60, 100);
         this.setVisible(true);
         startThread();
 

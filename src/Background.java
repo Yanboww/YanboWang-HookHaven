@@ -11,7 +11,7 @@ public class Background {
     public Background(String name)
     {
         this.name = name;
-        imageName = "Image/"+name+".jpg";
+        imageName = "Image/"+name;
         this.image = readImage();
     }
 
