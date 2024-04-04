@@ -6,6 +6,9 @@ public class Button {
     private int x;
     private int y;
 
+
+
+
     public Button(String name, int x, int y)
     {
         this.name = name;
@@ -30,16 +33,11 @@ public class Button {
         return y;
     }
 
-    public static ArrayList<Button> getButtons(Background currentBG)
-    {
-        ArrayList<Button> pageButtons = new ArrayList<>();
-        String backgroundName = currentBG.getName();
-        if(backgroundName.contains("menu"))
-        {
-            pageButtons.add(new Button("Play",200,400));
-            pageButtons.add(new Button("Help",200,500));
-            pageButtons.add(new Button("Quit",200,600));
-        }
-        return pageButtons;
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Background {
@@ -11,7 +12,7 @@ public class Background {
     public Background(String name)
     {
         this.name = name;
-        imageName = "Image/"+name;
+        imageName = getFileName(name);
         this.image = readImage();
     }
 
@@ -36,5 +37,20 @@ public class Background {
         {
             return null;
         }
+    }
+
+    public String getFileName(String name)
+    {
+        String fileName;
+        try{
+            fileName = "Image/"+name +".jpg";
+            File f = new File(fileName);
+            if(!f.exists()) throw new FileNotFoundException();
+        }
+        catch (FileNotFoundException e)
+        {
+            fileName = "Image/"+name +".png";
+        }
+        return fileName;
     }
 }
