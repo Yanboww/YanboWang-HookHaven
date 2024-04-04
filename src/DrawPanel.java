@@ -31,7 +31,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
        {
            int pageWidth = getWidth();
            int yOfRect = getHeight()/2;
-           BufferedImage logo = readImage("Image/logo.png");
+           BufferedImage logo = readImage("Image/Logo.png");
            g.drawImage(logo,pageWidth/4,yOfRect-100,pageWidth/4,getHeight()/6,null);
            for(Button currentButtons : currentPage.getCurrentButtons())
            {
