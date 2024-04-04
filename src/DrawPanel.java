@@ -59,7 +59,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
             for(Button currentButtons: currentPage.getCurrentButtons())
             {
                 Rectangle hitBox = currentButtons.getButton();
-                if(hitBox.contains(clicked)) System.out.println(currentButtons.getName());
+                if(hitBox.contains(clicked))
+                {
+                    currentPage = new Page(currentButtons.getName());
+                }
             }
         }
 
