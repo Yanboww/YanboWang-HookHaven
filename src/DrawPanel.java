@@ -26,32 +26,41 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
        if(currentPage.getPageName().equals("menu"))
        {
-           int pageWidth = getWidth();
-           int yOfRect = getHeight()/2;
-           BufferedImage logo = readImage("Image/Logo.png");
-           g.drawImage(logo,pageWidth/4,getHeight()/5,pageWidth/2,getHeight()/6,null);
-           for(Button currentButtons : currentPage.getCurrentButtons())
-           {
-               g.setColor(new Color(0,0,0));
-               g.fillRect(getWidth()/4,yOfRect,pageWidth/2+pageWidth/50,getHeight()/10+getHeight()/60);
-               g.setColor(new Color(100,180,211));
-               g.fillRect(getWidth()/4,yOfRect,pageWidth/2,getHeight()/10);
-               g.setColor(new Color(255,255,255));
-               g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/15));
-               g.drawString(currentButtons.getName(),getWidth()/4+pageWidth/6,yOfRect+getHeight()/13);
-               yOfRect += getHeight()/6;
-           }
+          paintMenu(g);
        }
     }
 
+    public void paintMenu(Graphics g)
+    {
+        g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
+        int pageWidth = getWidth();
+        int yOfRect = getHeight()/2;
+        BufferedImage logo = readImage("Image/Logo.png");
+        g.drawImage(logo,pageWidth/4,getHeight()/5,pageWidth/2,getHeight()/6,null);
+        for(Button currentButtons : currentPage.getCurrentButtons())
+        {
+            g.setColor(new Color(0,0,0));
+            g.fillRect(getWidth()/4,yOfRect,pageWidth/2+pageWidth/50,getHeight()/10+getHeight()/60);
+            g.setColor(new Color(100,180,211));
+            g.fillRect(getWidth()/4,yOfRect,pageWidth/2,getHeight()/10);
+            currentButtons.setRec(getWidth()/4,yOfRect,pageWidth/2,getHeight()/10);
+            g.setColor(new Color(255,255,255));
+            g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/15));
+            g.drawString(currentButtons.getName(),getWidth()/4+pageWidth/6,yOfRect+getHeight()/13);
+            yOfRect += getHeight()/6;
+        }
+    }
     public void mousePressed(MouseEvent e) {
 
         Point clicked = e.getPoint();
         if (e.getButton() == 1) {
-
+            for(Button currentButtons: currentPage.getCurrentButtons())
+            {
+                Rectangle hitBox = currentButtons.getButton();
+                if(hitBox.contains(clicked)) System.out.println(currentButtons.getName());
+            }
         }
 
     }
