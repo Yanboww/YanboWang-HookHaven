@@ -85,6 +85,10 @@ public class Character {
         this.dimensionX = dimensionX;
     }
 
+    public int getDimensionX() {
+        return dimensionX;
+    }
+
     public int getX() {
         return x;
     }
@@ -96,17 +100,20 @@ public class Character {
     public void setY(int y) {
         this.y = y;
     }
+    public void setX(int x) {
+        this.x = x;
+    }
 
     public void moveRight()
     {
-        x+=dimensionX/10;
+        x+=dimensionX/20;
         if(x>=dimensionX-dimensionX/10) x = dimensionX-dimensionX/10;
 
     }
 
     public void moveLeft()
     {
-        x-=dimensionX/10;
+        x-=dimensionX/20;
         if(x<0) x = 0;
     }
 }
