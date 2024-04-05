@@ -64,6 +64,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
         g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
         player.setY(getHeight()/2 + getHeight()/10);
         if(player.getDimensionX() != getWidth() && player.getX() == player.getDimensionX()-player.getDimensionX()/10) player.setX(getWidth()-getWidth()/10);
+        else if ( player.getX()>getWidth()) player.setX(getWidth()-getWidth()/10);
         player.setDimensionX(getWidth());
         g.fillRect(player.getX(),player.getY(),50,50);
         player.saveGame();
