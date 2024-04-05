@@ -16,12 +16,14 @@ import java.awt.Color;
 
 class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private Page currentPage;
+    private Character player;
 
     public DrawPanel() {
         currentPage = new Page("menu");
         this.addMouseListener(this);
         setFocusable(true);
         this.addKeyListener(this);
+        player = new Character(-1000);
     }
 
     protected void paintComponent(Graphics g) {
@@ -29,6 +31,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
        if(currentPage.getPageName().equals("menu"))
        {
           paintMenu(g);
+       }
+       else if (currentPage.getPageName().equals("Play"))
+       {
+           paintGame(g);
        }
     }
 
@@ -52,6 +58,15 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
             yOfRect += getHeight()/6;
         }
     }
+
+    public void paintGame(Graphics g)
+    {
+        g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
+        if(player.getY()==-1000)  player.setY(getHeight()/2 + getHeight()/10);
+        player.setDimensionX(getWidth());
+        g.fillRect(player.getX(),player.getY(),50,50);
+        player.saveGame();
+    }
     public void mousePressed(MouseEvent e) {
 
         Point clicked = e.getPoint();
@@ -71,11 +86,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
     {
         if (e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT)
         {
-
+            player.moveLeft();
         }
         else if (e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT)
         {
-
+            player.moveRight();
         }
     }
 
