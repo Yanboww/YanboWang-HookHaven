@@ -51,7 +51,7 @@ public class Background {
         {
             fileName = "Image/"+name +".png";
         }
-        System.out.println(fileName);
+        //System.out.println(fileName);
         return fileName;
     }
 }

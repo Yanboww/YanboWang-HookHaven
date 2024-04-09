@@ -40,9 +40,9 @@ public class Character {
         try{
             f = new File("Data/save_file");
             fw = new FileWriter(f);
-            fw.write(maxScore+"\n_____");
             if(!caughtFishTypes.isEmpty())
             {
+                fw.write(maxScore+"\n_____");
                 for(Fish caughtFish : caughtFishTypes)
                 {
                     fw.write(caughtFish.getName());
@@ -69,7 +69,7 @@ public class Character {
                 String currentLine = s.nextLine();
                 if(!currentLine.contains("_"))
                 {
-                    caughtFishTypes.add(new Fish(s.nextLine(),0));
+                    caughtFishTypes.add(new Fish(s.nextLine(),0,0,0,0));
                 }
                 start++;
             }
@@ -106,14 +106,14 @@ public class Character {
 
     public void moveRight()
     {
-        x+=dimensionX/20;
+        x+=dimensionX/40;
         if(x>=dimensionX-dimensionX/10) x = dimensionX-dimensionX/10;
 
     }
 
     public void moveLeft()
     {
-        x-=dimensionX/20;
+        x-=dimensionX/40;
         if(x<0) x = 0;
     }
 }

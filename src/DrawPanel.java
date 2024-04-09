@@ -17,6 +17,7 @@ import java.awt.Color;
 class DrawPanel extends JPanel implements MouseListener, KeyListener {
     private Page currentPage;
     private Character player;
+    private ArrayList<Fish> currentFishes;
 
     public DrawPanel() {
         currentPage = new Page("menu");
@@ -24,6 +25,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
         setFocusable(true);
         this.addKeyListener(this);
         player = new Character(-1000);
+        currentFishes = Fish.generateFishes(1000);
     }
 
     protected void paintComponent(Graphics g) {
@@ -68,17 +70,30 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
         player.setDimensionX(getWidth());
         g.fillRect(player.getX(),player.getY(),50,50);
         player.saveGame();
+        for(Fish swim : currentFishes)
+        {
+            if(swim.isRecentSpawned())
+            {
+                swim.recentFalse();
+                swim.changeHitBox(getWidth(),getHeight()+getHeight()/10,getWidth(),getHeight());
+            }
+            g.drawImage(swim.getImage(),swim.getX(),swim.getY(),getWidth()/swim.getWidth(),getHeight()/swim.getHeight(),null);
+            swim.swim(getWidth());
+        }
     }
     public void mousePressed(MouseEvent e) {
 
         Point clicked = e.getPoint();
         if (e.getButton() == 1) {
-            for(Button currentButtons: currentPage.getCurrentButtons())
+            if(currentPage.getPageName().equals("menu"))
             {
-                Rectangle hitBox = currentButtons.getButton();
-                if(hitBox.contains(clicked))
+                for(Button currentButtons: currentPage.getCurrentButtons())
                 {
-                    currentPage = new Page(currentButtons.getName());
+                    Rectangle hitBox = currentButtons.getButton();
+                    if(hitBox.contains(clicked))
+                    {
+                        currentPage = new Page(currentButtons.getName());
+                    }
                 }
             }
         }
