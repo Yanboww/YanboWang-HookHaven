@@ -17,6 +17,8 @@ public class Fish {
     private boolean recentSpawned;
     private int x;
     private int y;
+    private double mapPercent;
+    private int dimensionX;
 
     public Fish (String name, int pointGain, int height, int width, int speed)
     {
@@ -33,6 +35,8 @@ public class Fish {
         x= 0;
         y = 0;
         hitBox = new Rectangle(x,y,width,height);
+        mapPercent = 1;
+        dimensionX=500;
     }
     public String getName()
     {
@@ -59,9 +63,42 @@ public class Fish {
         hitBox = new Rectangle(x,y,width/this.width,height/this.height);
         this.x = x;
         this.y = y;
-        this.width = width/this.width;
-        this.height = height/this.height;
     }
+    public void changeHitBox(int x, int y)
+    {
+        hitBox.translate(x,y);
+    }
+    public void setY(int y)
+    {
+        this.y = y;
+
+    }
+
+    public void setX(int x)
+    {
+        this.x = x;
+    }
+
+
+    public void setMapPercent(double v)
+    {
+        mapPercent = v;
+    }
+
+    public double getMapPercent()
+    {
+        return  mapPercent;
+    }
+
+    public void setDimensionX(int width)
+    {
+        dimensionX = width;
+    }
+    public int getDimensionX()
+    {
+        return dimensionX;
+    }
+
 
     public Rectangle getHitBox() {
         return hitBox;
@@ -113,7 +150,8 @@ public class Fish {
 
     public void swim(int width)
     {
-        x = width/speed;
+        x-=width/speed;
+        changeHitBox(x,y);
     }
 
 

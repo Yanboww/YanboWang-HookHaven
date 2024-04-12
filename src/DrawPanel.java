@@ -1,7 +1,4 @@
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import java.awt.Graphics;
@@ -13,11 +10,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.Timer;
 
-class DrawPanel extends JPanel implements MouseListener, KeyListener {
+class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListener{
     private Page currentPage;
     private Character player;
     private ArrayList<Fish> currentFishes;
+    Timer t;
 
     public DrawPanel() {
         currentPage = new Page("menu");
@@ -26,6 +25,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
         this.addKeyListener(this);
         player = new Character(-1000);
         currentFishes = Fish.generateFishes(1000);
+        t = new Timer(100,this);
     }
 
     protected void paintComponent(Graphics g) {
@@ -63,6 +63,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     public void paintGame(Graphics g)
     {
+        t.start();
         g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
         player.setY(getHeight()/2 + getHeight()/10);
         if(player.getDimensionX() != getWidth() && player.getX() == player.getDimensionX()-player.getDimensionX()/10) player.setX(getWidth()-getWidth()/10);
@@ -74,11 +75,20 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
         {
             if(swim.isRecentSpawned())
             {
+                swim.setDimensionX(getWidth());
                 swim.recentFalse();
-                swim.changeHitBox(getWidth(),getHeight()+getHeight()/10,getWidth(),getHeight());
+                swim.changeHitBox(getWidth()-getWidth()/10,getHeight()-getHeight()/6,getWidth(),getHeight());
             }
+            else if(swim.getDimensionX()!=getWidth())
+            {
+                swim.setDimensionX(getWidth());
+                swim.setX((int)((swim.getDimensionX()- swim.getDimensionX()/10)*swim.getMapPercent()));
+                swim.changeHitBox(swim.getX(),swim.getY());
+            }
+            swim.setMapPercent(swim.getX()/(getWidth()-getWidth()/10));
+            swim.setY(getHeight()-getHeight()/6);
+            swim.changeHitBox(swim.getX(),swim.getY());
             g.drawImage(swim.getImage(),swim.getX(),swim.getY(),getWidth()/swim.getWidth(),getHeight()/swim.getHeight(),null);
-            swim.swim(getWidth());
         }
     }
     public void mousePressed(MouseEvent e) {
@@ -117,6 +127,12 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
     public void mouseClicked(MouseEvent e) { }
     public void keyTyped(KeyEvent e){ }
     public void keyReleased(KeyEvent e){}
+    public void actionPerformed(ActionEvent e){
+        for(Fish swim : currentFishes)
+        {
+            swim.swim(getWidth());
+        }
+    }
 
     public BufferedImage readImage(String imageName)
     {
