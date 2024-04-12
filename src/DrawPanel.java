@@ -66,8 +66,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         t.start();
         g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
         player.setY(getHeight()/2 + getHeight()/10);
-        if(player.getDimensionX() != getWidth() && player.getX() == player.getDimensionX()-player.getDimensionX()/10) player.setX(getWidth()-getWidth()/10);
-        else if ( player.getX()>getWidth()) player.setX(getWidth()-getWidth()/10);
+        if(player.getDimensionX()!= getWidth())
+        {
+            player.setDimensionX(getWidth());
+            player.setX((int)((player.getDimensionX()- player.getDimensionX()/10)*player.getPercentMap()));
+        }
         player.setDimensionX(getWidth());
         g.fillRect(player.getX(),player.getY(),50,50);
         player.saveGame();
@@ -85,7 +88,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                 swim.setX((int)((swim.getDimensionX()- swim.getDimensionX()/10)*swim.getMapPercent()));
                 swim.changeHitBox(swim.getX(),swim.getY());
             }
-            swim.setMapPercent(swim.getX()/(getWidth()-getWidth()/10));
+            swim.setMapPercent((double)swim.getX()/(getWidth()-getWidth()/10));
             swim.setY(getHeight()-getHeight()/6);
             swim.changeHitBox(swim.getX(),swim.getY());
             g.drawImage(swim.getImage(),swim.getX(),swim.getY(),getWidth()/swim.getWidth(),getHeight()/swim.getHeight(),null);

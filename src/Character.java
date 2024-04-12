@@ -15,6 +15,7 @@ public class Character {
     private int y;
 
     private int dimensionX;
+    private double percentMap;
 
     public Character(int y)
     {
@@ -24,6 +25,7 @@ public class Character {
         x = 0;
         this.y = y;
         dimensionX = 500;
+        percentMap = 1;
     }
 
     public void addPoints(Fish f)
@@ -104,10 +106,19 @@ public class Character {
         this.x = x;
     }
 
+    public double getPercentMap() {
+        return percentMap;
+    }
+
+    public void setPercentMap(double percentMap) {
+        this.percentMap = percentMap;
+    }
+
     public void moveRight()
     {
         x+=dimensionX/40;
         if(x>=dimensionX-dimensionX/10) x = dimensionX-dimensionX/10;
+        setPercentMap((double)x/getDimensionX());
 
     }
 
@@ -115,5 +126,6 @@ public class Character {
     {
         x-=dimensionX/40;
         if(x<0) x = 0;
+        setPercentMap((double)x/getDimensionX());
     }
 }
