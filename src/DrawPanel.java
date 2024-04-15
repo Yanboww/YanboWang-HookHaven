@@ -17,6 +17,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     private Character player;
     private ArrayList<Fish> currentFishes;
     Timer t;
+    private FishGenerate generator;
 
     public DrawPanel() {
         currentPage = new Page("menu");
@@ -24,7 +25,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         setFocusable(true);
         this.addKeyListener(this);
         player = new Character(-1000);
-        currentFishes = Fish.generateFishes(1000);
+        generator =  new FishGenerate();
         t = new Timer(100,this);
     }
 
@@ -64,6 +65,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     public void paintGame(Graphics g)
     {
         t.start();
+        generator.startTimer();
+        if(currentFishes == null)
+        {
+            currentFishes = generator.generateFishes(getWidth());
+        }
         g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
         player.setY(getHeight()/2 + getHeight()/10);
         if(player.getDimensionX()!= getWidth())
@@ -89,7 +95,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                 swim.changeHitBox(swim.getX(),swim.getY());
             }
             swim.setMapPercent((double)swim.getX()/(getWidth()-getWidth()/10));
-            swim.setY(getHeight()-getHeight()/6);
+            swim.setY(getHeight()-getHeight()/6,getHeight());
             swim.changeHitBox(swim.getX(),swim.getY());
             g.drawImage(swim.getImage(),swim.getX(),swim.getY(),getWidth()/swim.getWidth(),getHeight()/swim.getHeight(),null);
         }

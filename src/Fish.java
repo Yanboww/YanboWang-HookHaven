@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Rectangle;
 
-public class Fish {
+
+public class Fish{
     private String name;
     private int pointGain;
     private String imageName;
@@ -19,7 +20,7 @@ public class Fish {
     private int y;
     private double mapPercent;
     private int dimensionX;
-
+    private int dimensionY;
     public Fish (String name, int pointGain, int height, int width, int speed)
     {
 
@@ -37,6 +38,7 @@ public class Fish {
         hitBox = new Rectangle(x,y,width,height);
         mapPercent = 1;
         dimensionX=500;
+        dimensionY = 500;
     }
     public String getName()
     {
@@ -68,10 +70,19 @@ public class Fish {
     {
         hitBox.translate(x,y);
     }
-    public void setY(int y)
+    public void setY(int height, int dimensionY)
     {
-        this.y = y;
-
+      if(y==0){
+          if(name.equals("fish_walker1") || name.equals("treasureChest")) y = (height-height/6);
+          else{
+              y = (int)(Math.random()*(height/2))+(height-height/6);
+          }
+      }
+      if(dimensionY!=this.dimensionY)
+      {
+          y = y/this.dimensionY * dimensionY;
+          this.dimensionY = dimensionY;
+      }
     }
 
     public void setX(int x)
@@ -137,21 +148,18 @@ public class Fish {
         }
     }
 
-    public static ArrayList<Fish> generateFishes(int time)
-    {
-        ArrayList<Fish> generatedFishes = new ArrayList<>();
-        if(time%1000==0)
-        {
-            generatedFishes.add(new WalkerFish());
-        }
-        generatedFishes.add(new WalkerFish());
-        return generatedFishes;
-    }
-
     public void swim(int width)
     {
-        x-=width/speed;
-        changeHitBox(x,y);
+       if(!name.equals("treasureChest"))
+       {
+           x-=width/speed;
+           changeHitBox(x,y);
+       }
+       else{
+           if(x==0){
+               x = (int)(Math.random()*(width-width/10));
+           }
+       }
     }
 
 
