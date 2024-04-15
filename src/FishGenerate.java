@@ -25,7 +25,7 @@ public class FishGenerate implements ActionListener{
             generatedFishes.add(new WalkerFish());
             spawnSpecial = false;
         }
-        for(int i = 0; i < width/100;i++)
+        for(int i = 0; i < width/100+5;i++)
         {
             int dice = (int)(Math.random()*100);
             String[] fishInfo;
@@ -50,7 +50,7 @@ public class FishGenerate implements ActionListener{
             }
             generatedFishes.add(new Fish(fishInfo[0],pointValue.get(fishInfo[0]) ,Integer.parseInt(fishInfo[1]),Integer.parseInt(fishInfo[2]),Integer.parseInt(fishInfo[3])));
         }
-        System.out.println(generatedFishes);
+        generatedFishes.add(new Fish("treasureChest",100,10,10,0));
         return generatedFishes;
     }
 
@@ -64,15 +64,15 @@ public class FishGenerate implements ActionListener{
 
     public void generateAvailableFishes()
     {
-        availableFishes.add("bass 6 8 40");
+        availableFishes.add("bass 3 2 70");
         pointValue.put("bass",40);
-        availableFishes.add("goldfish 8 9 60");
+        availableFishes.add("goldfish 6 7 100");
         pointValue.put("goldfish",30);
-        availableFishes.add("stingray 4 6 40");
+        availableFishes.add("stingray 4 5 30");
         pointValue.put("stingray",80);
-        availableFishes.add("shark 9 11 30");
+        availableFishes.add("shark 4 2 20");
         pointValue.put("shark",100);
-        availableFishes.add("treasureChest 5 5 0");
+        availableFishes.add("treasureChest 10 10 0");
         pointValue.put("treasureChest",90);
     }
 

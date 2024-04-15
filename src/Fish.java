@@ -75,7 +75,7 @@ public class Fish{
       if(y==0){
           if(name.equals("fish_walker1") || name.equals("treasureChest")) y = (height-height/6);
           else{
-              y = (int)(Math.random()*(height/2))+(height-height/6);
+              y = (int)(Math.random()*(height/14))+(height-height/6);
           }
       }
       if(dimensionY!=this.dimensionY)
@@ -157,7 +157,7 @@ public class Fish{
        }
        else{
            if(x==0){
-               x = (int)(Math.random()*(width-width/10));
+               x = (int)(Math.random()*(width-width/10)) + 100;
            }
        }
     }

@@ -11,7 +11,7 @@ public class WalkerFish extends Fish{
 
     public WalkerFish()
     {
-        super("fish_walker1",200,6,7,30);
+        super("fish_walker1",200,6,7,10);
         imageName2 =  "Images/fish_walker2.png";
         imageName3 =  "Images/fish_walker2.png";
         image2 = readImage(imageName2);
