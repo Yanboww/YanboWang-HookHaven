@@ -73,9 +73,9 @@ public class Fish{
     public void setY(int height, int dimensionY)
     {
       if(y==0){
-          if(name.equals("fish_walker1") || name.equals("treasureChest")) y = (height-height/6);
+          if(name.equals("fish_walker1") || name.equals("treasureChest")) y = (height-height/50);
           else{
-              y = (int)(Math.random()*(height/14))+(height-height/6);
+              y = (int)(Math.random()*(height/2-height/4))+(height/2+height/10);
           }
       }
       if(dimensionY!=this.dimensionY)

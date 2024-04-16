@@ -27,6 +27,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         player = new Character(-1000);
         generator =  new FishGenerate();
         t = new Timer(100,this);
+        currentFishes = new ArrayList<>();
     }
 
     protected void paintComponent(Graphics g) {
@@ -68,10 +69,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         generator.startTimer();
         if(currentFishes == null)
         {
-            currentFishes = generator.generateFishes(getWidth());
+            generator.generateFishes(getWidth(),currentFishes);
         }
         g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
-        player.setY(getHeight()/2 + getHeight()/10);
+        player.setY(getHeight()/2-getHeight()/40);
         if(player.getDimensionX()!= getWidth())
         {
             player.setDimensionX(getWidth());
@@ -115,6 +116,18 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                     }
                 }
             }
+            else if(currentPage.getPageName().equals("Play"))
+            {
+                for(int i = 0; i < currentFishes.size(); i++)
+                {
+                    Rectangle hitBox = currentFishes.get(i).getHitBox();
+                    if(hitBox.contains(clicked)){
+                        currentFishes.remove(i);
+                        i--;
+                        generator.generateFishes(getWidth(),currentFishes);
+                    }
+                }
+            }
         }
 
     }
@@ -137,10 +150,17 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     public void keyTyped(KeyEvent e){ }
     public void keyReleased(KeyEvent e){}
     public void actionPerformed(ActionEvent e){
-        for(Fish swim : currentFishes)
+        for(int i = 0; i < currentFishes.size(); i++)
         {
-            swim.swim(getWidth());
+            Fish f = currentFishes.get(i);
+            f.swim(getWidth());
+            if(f.getX()<0)
+            {
+                currentFishes.remove(i);
+                i--;
+            }
         }
+        generator.generateFishes(getWidth(),currentFishes);
     }
 
     public BufferedImage readImage(String imageName)

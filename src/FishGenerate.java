@@ -12,20 +12,18 @@ public class FishGenerate implements ActionListener{
     public FishGenerate(){
         availableFishes = new ArrayList<>();
         pointValue = new HashMap<>();
-        t = new Timer(6000,this);
+        t = new Timer(60000,this);
         generateAvailableFishes();
     }
 
-    public ArrayList<Fish> generateFishes(int width)
+    public ArrayList<Fish> generateFishes(int width, ArrayList<Fish> generatedFishes)
     {
-
-        ArrayList<Fish> generatedFishes = new ArrayList<>();
         if(spawnSpecial)
         {
             generatedFishes.add(new WalkerFish());
             spawnSpecial = false;
         }
-        for(int i = 0; i < width/100+5;i++)
+        for(int i = generatedFishes.size(); i < width/100+5;i++)
         {
             int dice = (int)(Math.random()*100);
             String[] fishInfo;
@@ -50,7 +48,6 @@ public class FishGenerate implements ActionListener{
             }
             generatedFishes.add(new Fish(fishInfo[0],pointValue.get(fishInfo[0]) ,Integer.parseInt(fishInfo[1]),Integer.parseInt(fishInfo[2]),Integer.parseInt(fishInfo[3])));
         }
-        generatedFishes.add(new Fish("treasureChest",100,10,10,0));
         return generatedFishes;
     }
 
@@ -64,15 +61,15 @@ public class FishGenerate implements ActionListener{
 
     public void generateAvailableFishes()
     {
-        availableFishes.add("bass 3 2 70");
+        availableFishes.add("bass 2 2 70");
         pointValue.put("bass",40);
         availableFishes.add("goldfish 6 7 100");
         pointValue.put("goldfish",30);
-        availableFishes.add("stingray 4 5 30");
+        availableFishes.add("stingray 3 4 30");
         pointValue.put("stingray",80);
         availableFishes.add("shark 4 2 20");
         pointValue.put("shark",100);
-        availableFishes.add("treasureChest 10 10 0");
+        availableFishes.add("treasureChest 9 10 0");
         pointValue.put("treasureChest",90);
     }
 
