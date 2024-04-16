@@ -12,7 +12,7 @@ public class FishGenerate implements ActionListener{
     public FishGenerate(){
         availableFishes = new ArrayList<>();
         pointValue = new HashMap<>();
-        t = new Timer(60000,this);
+        t = new Timer(6000,this);
         generateAvailableFishes();
     }
 

@@ -147,6 +147,10 @@ public class Fish{
             return null;
         }
     }
+    public int getSpeed()
+    {
+        return speed;
+    }
 
     public void swim(int width)
     {
@@ -157,7 +161,7 @@ public class Fish{
        }
        else{
            if(x==0){
-               x = (int)(Math.random()*(width-width/10)) + 100;
+               x = (int)(Math.random()*(width))+10;
            }
        }
     }

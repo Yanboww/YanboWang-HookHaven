@@ -9,7 +9,7 @@ public class Character {
     private int score;
 
     private int maxScore;
-    private ArrayList<Fish> caughtFishTypes;
+    private ArrayList<String> caughtFishTypes;
 
     private int x;
     private int y;
@@ -32,8 +32,24 @@ public class Character {
     {
         score += f.getPointGain();
         maxScore = Math.max(score,maxScore);
+        String name = f.getName();
+        if(!caughtFishTypes.contains(name))
+        {
+            caughtFishTypes.add(name);
+        }
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public int getMaxScore() {
+        return maxScore;
+    }
+
+    public ArrayList<String> getCaughtFishTypes() {
+        return caughtFishTypes;
+    }
 
     public void saveGame()
     {
@@ -45,9 +61,9 @@ public class Character {
             if(!caughtFishTypes.isEmpty())
             {
                 fw.write(maxScore+"\n_____");
-                for(Fish caughtFish : caughtFishTypes)
+                for(String caughtFish : caughtFishTypes)
                 {
-                    fw.write(caughtFish.getName());
+                    fw.write(caughtFish);
                 }
             }
         }
@@ -71,7 +87,7 @@ public class Character {
                 String currentLine = s.nextLine();
                 if(!currentLine.contains("_"))
                 {
-                    caughtFishTypes.add(new Fish(s.nextLine(),0,0,0,0));
+                    caughtFishTypes.add(s.nextLine());
                 }
                 start++;
             }

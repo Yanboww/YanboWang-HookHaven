@@ -87,7 +87,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             {
                 swim.setDimensionX(getWidth());
                 swim.recentFalse();
-                swim.changeHitBox(getWidth()-getWidth()/10,getHeight()-getHeight()/6,getWidth(),getHeight());
+                if(!swim.getName().equals("treasureChest")){
+                    swim.changeHitBox(getWidth()-getWidth()/10,getHeight()-getHeight()/6,getWidth(),getHeight());
+                }
+                else swim.swim(getWidth());
+
             }
             else if(swim.getDimensionX()!=getWidth())
             {
@@ -123,6 +127,9 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                 {
                     Rectangle hitBox = currentFishes.get(i).getHitBox();
                     if(hitBox.contains(clicked) && !caughtAlready){
+                        player.addPoints(currentFishes.get(i));
+                        System.out.println(player.getScore());
+                        System.out.println(player.getCaughtFishTypes());
                         currentFishes.remove(i);
                         i--;
                         generator.generateFishes(getWidth(),currentFishes);
@@ -156,7 +163,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         {
             Fish f = currentFishes.get(i);
             f.swim(getWidth());
-            if(f.getX()<0)
+            if(f.getX()<getWidth()/-4)
             {
                 currentFishes.remove(i);
                 i--;
