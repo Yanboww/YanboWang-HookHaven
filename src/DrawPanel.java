@@ -67,19 +67,19 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     {
         t.start();
         generator.startTimer();
-        if(currentFishes == null)
+        if(currentFishes.isEmpty())
         {
             generator.generateFishes(getWidth(),currentFishes);
         }
         g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
-        player.setY(getHeight()/2-getHeight()/40);
+        player.setY(getHeight()/2);
         if(player.getDimensionX()!= getWidth())
         {
             player.setDimensionX(getWidth());
             player.setX((int)((player.getDimensionX()- player.getDimensionX()/10)*player.getPercentMap()));
         }
         player.setDimensionX(getWidth());
-        g.fillRect(player.getX(),player.getY(),50,50);
+        g.fillRect(player.getX(),player.getY(),getWidth()/10,getHeight()/10);
         player.saveGame();
         for(Fish swim : currentFishes)
         {
@@ -97,7 +97,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             }
             swim.setMapPercent((double)swim.getX()/(getWidth()-getWidth()/10));
             swim.setY(getHeight()-getHeight()/6,getHeight());
-            swim.changeHitBox(swim.getX(),swim.getY());
+            swim.changeHitBox(swim.getX(),swim.getY(),getWidth(),getHeight());
             g.drawImage(swim.getImage(),swim.getX(),swim.getY(),getWidth()/swim.getWidth(),getHeight()/swim.getHeight(),null);
         }
     }
@@ -118,13 +118,15 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             }
             else if(currentPage.getPageName().equals("Play"))
             {
+                boolean caughtAlready = false;
                 for(int i = 0; i < currentFishes.size(); i++)
                 {
                     Rectangle hitBox = currentFishes.get(i).getHitBox();
-                    if(hitBox.contains(clicked)){
+                    if(hitBox.contains(clicked) && !caughtAlready){
                         currentFishes.remove(i);
                         i--;
                         generator.generateFishes(getWidth(),currentFishes);
+                        caughtAlready = true;
                     }
                 }
             }

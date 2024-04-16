@@ -65,12 +65,12 @@ public class FishGenerate implements ActionListener{
         pointValue.put("bass",40);
         availableFishes.add("goldfish 6 7 100");
         pointValue.put("goldfish",30);
-        availableFishes.add("stingray 3 4 30");
-        pointValue.put("stingray",80);
-        availableFishes.add("shark 4 2 20");
-        pointValue.put("shark",100);
+        availableFishes.add("stingray 3 4 50");
+        pointValue.put("stingray",50);
+        availableFishes.add("shark 4 2 40");
+        pointValue.put("shark",80);
         availableFishes.add("treasureChest 9 10 0");
-        pointValue.put("treasureChest",90);
+        pointValue.put("treasureChest",50);
     }
 
 }
