@@ -8,6 +8,7 @@ public class FishGenerate implements ActionListener{
     private static ArrayList<String> availableFishes;
     private static HashMap<String,Integer> pointValue;
     public static boolean spawnSpecial;
+    int counter = 0;
 
     public FishGenerate(){
         availableFishes = new ArrayList<>();
@@ -69,7 +70,7 @@ public class FishGenerate implements ActionListener{
         pointValue.put("stingray",50);
         availableFishes.add("shark 4 2 40");
         pointValue.put("shark",80);
-        availableFishes.add("treasureChest 9 10 0");
+        availableFishes.add("treasureChest 15 15 0");
         pointValue.put("treasureChest",50);
     }
 

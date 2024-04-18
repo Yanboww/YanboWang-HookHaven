@@ -18,6 +18,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     private ArrayList<Fish> currentFishes;
     Timer t;
     private FishGenerate generator;
+    private GameTimer gameTime;
 
     public DrawPanel() {
         currentPage = new Page("menu");
@@ -28,6 +29,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         generator =  new FishGenerate();
         t = new Timer(100,this);
         currentFishes = new ArrayList<>();
+        gameTime = new GameTimer();
     }
 
     protected void paintComponent(Graphics g) {
@@ -65,13 +67,17 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
 
     public void paintGame(Graphics g)
     {
+        int[] timer = gameTime.getTimeRemaining();
+        String time = timer[0] + ":" + timer[1] + timer[2];
         t.start();
-        generator.startTimer();
         if(currentFishes.isEmpty())
         {
             generator.generateFishes(getWidth(),currentFishes);
         }
         g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
+        g.setColor(new Color(255,255,255));
+        g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
+        g.drawString("Time Remaining - " + time,10,getHeight()/10);
         player.setY(getHeight()/2);
         if(player.getDimensionX()!= getWidth())
         {
@@ -119,6 +125,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                     if(hitBox.contains(clicked))
                     {
                         currentPage = new Page(currentButtons.getName());
+                        if(currentButtons.getName().equals("Play")){
+                            gameTime.startGame();
+                            generator.startTimer();
+                        }
                     }
                 }
             }
