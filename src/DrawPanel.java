@@ -86,6 +86,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             if(swim.isRecentSpawned())
             {
                 swim.setDimensionX(getWidth());
+                swim.setDimensionY(getHeight());
+                swim.setY(getHeight()-getHeight()/6,getHeight());
                 swim.recentFalse();
                 if(!swim.getName().equals("treasureChest")){
                     swim.changeHitBox(getWidth()-getWidth()/10,getHeight()-getHeight()/6,getWidth(),getHeight());

@@ -70,9 +70,13 @@ public class Fish{
     {
         hitBox.translate(x,y);
     }
+    public void setDimensionY(int dimensionY)
+    {
+        this.dimensionY = dimensionY;
+    }
     public void setY(int height, int dimensionY)
     {
-      if(y==0){
+      if(y==0 || y >=dimensionY*0.83){
           if(name.equals("fish_walker1") || name.equals("treasureChest")) y = (height-height/50);
           else{
               y = (int)(Math.random()*(height/2-height/6))+(height/2+height/8);

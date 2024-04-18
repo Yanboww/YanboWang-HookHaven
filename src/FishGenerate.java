@@ -12,7 +12,7 @@ public class FishGenerate implements ActionListener{
     public FishGenerate(){
         availableFishes = new ArrayList<>();
         pointValue = new HashMap<>();
-        t = new Timer(6000,this);
+        t = new Timer(60000,this);
         generateAvailableFishes();
     }
 
@@ -23,9 +23,9 @@ public class FishGenerate implements ActionListener{
             generatedFishes.add(new WalkerFish());
             spawnSpecial = false;
         }
-        for(int i = generatedFishes.size(); i < width/100+5;i++)
+        for(int i = generatedFishes.size(); i < width/150+5;i++)
         {
-            int dice = (int)(Math.random()*100);
+            int dice = (int)(Math.random()*200);
             String[] fishInfo;
             if(dice<5)
             {
@@ -39,7 +39,7 @@ public class FishGenerate implements ActionListener{
             {
                 fishInfo = availableFishes.get(2).split(" ");
             }
-            else if(dice<50)
+            else if(dice<80)
             {
                 fishInfo = availableFishes.get(0).split(" ");
             }
