@@ -1,4 +1,8 @@
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.Timer;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,7 +11,7 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Character {
+public class Character implements ActionListener {
     private int score;
 
     private int maxScore;
@@ -20,7 +24,8 @@ public class Character {
     private double percentMap;
     private String imageName;
     private BufferedImage image;
-
+    private Rectangle fishingLine;
+    Timer t;
     public Character(int y)
     {
         score = 0;
@@ -32,6 +37,35 @@ public class Character {
         percentMap = 1;
         imageName = "Image/character.png";
         image = readImage();
+        fishingLine = new Rectangle(5,100,x + dimensionX/10,0);
+        t = new Timer(100,this);
+    }
+
+    public void startAnimTimer()
+    {
+        t.start();
+    }
+
+    public void setFishingLine(int x, int y, int width, int length)
+    {
+        fishingLine = new Rectangle(x,y,width,length);
+    }
+
+    public int getFishingLineX()
+    {
+        return (int)fishingLine.getX();
+    }
+    public int getFishingLineY()
+    {
+        return (int)fishingLine.getY();
+    }
+    public int getFishingLineW()
+    {
+        return (int)fishingLine.getWidth();
+    }
+    public int getFishingLineH()
+    {
+        return (int)fishingLine.getHeight();
     }
 
     public void addPoints(Fish f)
@@ -164,5 +198,13 @@ public class Character {
             System.out.println("e");
             return null;
         }
+    }
+    public void dropLine()
+    {
+        t.start();
+    }
+    public void actionPerformed(ActionEvent e)
+    {
+        setFishingLine(getFishingLineX(),getFishingLineY(),getFishingLineW(),getFishingLineH()+dimensionX/20);
     }
 }
