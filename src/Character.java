@@ -1,3 +1,5 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -16,6 +18,8 @@ public class Character {
 
     private int dimensionX;
     private double percentMap;
+    private String imageName;
+    private BufferedImage image;
 
     public Character(int y)
     {
@@ -26,6 +30,8 @@ public class Character {
         this.y = y;
         dimensionX = 500;
         percentMap = 1;
+        imageName = "Image/character.png";
+        image = readImage();
     }
 
     public void addPoints(Fish f)
@@ -143,5 +149,20 @@ public class Character {
         x-=dimensionX/40;
         if(x<0) x = 0;
         setPercentMap((double)x/getDimensionX());
+    }
+    public BufferedImage getImage()
+    {
+        return image;
+    }
+    public BufferedImage readImage()
+    {
+        try{
+            return ImageIO.read(new File(imageName));
+        }
+        catch(IOException e)
+        {
+            System.out.println("e");
+            return null;
+        }
     }
 }

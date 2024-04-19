@@ -13,7 +13,7 @@ public class FishGenerate implements ActionListener{
     public FishGenerate(){
         availableFishes = new ArrayList<>();
         pointValue = new HashMap<>();
-        t = new Timer(60000,this);
+        t = new Timer(30000,this);
         generateAvailableFishes();
     }
 
@@ -21,7 +21,18 @@ public class FishGenerate implements ActionListener{
     {
         if(spawnSpecial)
         {
-            generatedFishes.add(new WalkerFish());
+            if(counter == 2){
+                generatedFishes.add(new WalkerFish());
+                counter=0;
+            }
+            for(int i = 0; i < generatedFishes.size();i++)
+            {
+                if(generatedFishes.get(i).getName().equals("treasureChest"))
+                {
+                    generatedFishes.remove(i);
+                    break;
+                }
+            }
             spawnSpecial = false;
         }
         for(int i = generatedFishes.size(); i < width/150+5;i++)
@@ -58,6 +69,7 @@ public class FishGenerate implements ActionListener{
     }
     public void actionPerformed(ActionEvent e) {
         spawnSpecial = true;
+        counter++;
     }
 
     public void generateAvailableFishes()
