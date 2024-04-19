@@ -69,6 +69,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     {
         int[] timer = gameTime.getTimeRemaining();
         String time = timer[0] + ":" + timer[1] + timer[2];
+        if(time.equals("0:00")) {
+            currentPage = new Page("menu");
+            gameTime = new GameTimer();
+            return;
+        }
         t.start();
         if(currentFishes.isEmpty())
         {
@@ -78,6 +83,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.setColor(new Color(255,255,255));
         g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
         g.drawString("Time Remaining - " + time,10,getHeight()/10);
+        g.drawString("Score:  " + player.getScore(),10,getHeight()/10+getHeight()/10);
+
         player.setY(getHeight()/3+getHeight()/20);
         if(player.getDimensionX()!= getWidth())
         {
@@ -171,17 +178,20 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     public void keyTyped(KeyEvent e){ }
     public void keyReleased(KeyEvent e){}
     public void actionPerformed(ActionEvent e){
-        for(int i = 0; i < currentFishes.size(); i++)
-        {
-            Fish f = currentFishes.get(i);
-            f.swim(getWidth());
-            if(f.getX()<getWidth()/-4)
-            {
-                currentFishes.remove(i);
-                i--;
-            }
-        }
-        generator.generateFishes(getWidth(),currentFishes);
+       if(currentPage.getPageName().equals("Play"))
+       {
+           for(int i = 0; i < currentFishes.size(); i++)
+           {
+               Fish f = currentFishes.get(i);
+               f.swim(getWidth());
+               if(f.getX()<getWidth()/-4)
+               {
+                   currentFishes.remove(i);
+                   i--;
+               }
+           }
+           generator.generateFishes(getWidth(),currentFishes);
+       }
     }
 
     public BufferedImage readImage(String imageName)

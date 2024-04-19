@@ -42,17 +42,17 @@ public class FishGenerate implements ActionListener{
             if(dice<5)
             {
                 fishInfo = availableFishes.get(3).split(" ");
-                if(countFishInList(fishInfo[0],generatedFishes)>2) fishInfo = availableFishes.get(1).split(" ");
+                if(countFishInList(fishInfo[0],generatedFishes)>=2) fishInfo = availableFishes.get(1).split(" ");
             }
             else if(dice<10)
             {
                 fishInfo = availableFishes.get(4).split(" ");
-                if(countFishInList(fishInfo[0],generatedFishes)>3) fishInfo = availableFishes.get(1).split(" ");
+                if(countFishInList(fishInfo[0],generatedFishes)>=3) fishInfo = availableFishes.get(1).split(" ");
             }
             else if(dice<20)
             {
                 fishInfo = availableFishes.get(2).split(" ");
-                if(countFishInList(fishInfo[0],generatedFishes)>5) fishInfo = availableFishes.get(1).split(" ");
+                if(countFishInList(fishInfo[0],generatedFishes)>=5) fishInfo = availableFishes.get(1).split(" ");
             }
             else if(dice<80)
             {
