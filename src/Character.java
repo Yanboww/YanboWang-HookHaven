@@ -28,6 +28,7 @@ public class Character implements ActionListener {
     Timer t;
     private int screenHeight;
     private boolean isRetracting;
+    private boolean caughtAlready;
 
     public Character(int y)
     {
@@ -42,6 +43,7 @@ public class Character implements ActionListener {
         imageName = "Image/character.png";
         image = readImage();
         isRetracting = false;
+        caughtAlready = false;
         fishingLine = new Rectangle(5,100,x + dimensionX/10,0);
         t = new Timer(100,this);
     }
@@ -216,18 +218,32 @@ public class Character implements ActionListener {
             setFishingLine(getFishingLineX(),getFishingLineY(),getFishingLineW(),getFishingLineH()-dimensionX/20);
             isRetracting = true;
         }
-        else if(isRetracting)
+        else if(isRetracting || caughtAlready)
         {
            if(getFishingLineY()+getFishingLineH()>getY()+getY()/3)setFishingLine(getFishingLineX(),getFishingLineY(),getFishingLineW(),getFishingLineH()-dimensionX/20);
            else {
                isRetracting = false;
+               caughtAlready = false;
                t.stop();
            }
         }
         else{
             setFishingLine(getFishingLineX(),getFishingLineY(),getFishingLineW(),getFishingLineH()+dimensionX/20);
         }
-
+        Point polePoint = new Point(getFishingLineX(),getFishingLineY()+getFishingLineH());
+        ArrayList<Fish> currentFishes = DrawPanel.getCurrentFishes();
+        for(int i = 0; i < currentFishes.size(); i++)
+        {
+            Rectangle hitBox = currentFishes.get(i).getHitBox();
+            if(hitBox.contains(polePoint) && !caughtAlready && !isRetracting){
+                addPoints(currentFishes.get(i));
+                System.out.println(getScore());
+                System.out.println(getCaughtFishTypes());
+                currentFishes.remove(i);
+                i--;
+                caughtAlready = true;
+            }
+        }
     }
 
 }

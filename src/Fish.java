@@ -27,7 +27,7 @@ public class Fish{
         this.name = name;
         this.pointGain = pointGain;
         imageName = "Image/"+name+".png";
-        System.out.println(imageName);
+        //System.out.println(imageName);
         image = readImage();
         this.height = height;
         this.width = width;
@@ -148,7 +148,6 @@ public class Fish{
         }
         catch(IOException e)
         {
-            System.out.println("e");
             return null;
         }
     }

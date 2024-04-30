@@ -15,7 +15,7 @@ import javax.swing.Timer;
 class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListener{
     private Page currentPage;
     private Character player;
-    private ArrayList<Fish> currentFishes;
+    private static ArrayList<Fish> currentFishes;
     Timer t;
     private FishGenerate generator;
     private GameTimer gameTime;
@@ -145,22 +145,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             }
             else if(currentPage.getPageName().equals("Play"))
             {
-                clicked = new Point(player.getFishingLineX(),player.getFishingLineY()+player.getFishingLineH());
                 player.dropLine(getHeight());
-                boolean caughtAlready = false;
-                for(int i = 0; i < currentFishes.size(); i++)
-                {
-                    Rectangle hitBox = currentFishes.get(i).getHitBox();
-                    if(hitBox.contains(clicked) && !caughtAlready){
-                        player.addPoints(currentFishes.get(i));
-                        System.out.println(player.getScore());
-                        System.out.println(player.getCaughtFishTypes());
-                        currentFishes.remove(i);
-                        i--;
-                        generator.generateFishes(getWidth(),currentFishes);
-                        caughtAlready = true;
-                    }
-                }
+                generator.generateFishes(getWidth(),currentFishes);
             }
         }
 
@@ -209,6 +195,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         {
             return null;
         }
+    }
+
+    public static ArrayList<Fish> getCurrentFishes()
+    {
+        return currentFishes;
     }
 
 }
