@@ -90,9 +90,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             player.setDimensionX(getWidth());
             player.setX((int)((player.getDimensionX()- player.getDimensionX()/10)*player.getPercentMap()));
         }
-        player.setFishingLine(player.getX() + getWidth()/6-getWidth()/200,player.getY()+player.getY()/3,getWidth()/160, player.getFishingLineH());
+        player.setFishingLine(player.getX() + getWidth()/6-getWidth()/200+getWidth()/700,player.getY()+player.getY()/3,getWidth()/160, player.getFishingLineH());
         player.setDimensionX(getWidth());
         g.drawImage(player.getImage(),player.getX(),player.getY(),getWidth()/5,getHeight()/4,null);
+        g.setColor(new Color(0, 0, 0));
+        g.fillRect(player.getFishingLineX()-getWidth()/600,player.getFishingLineY(), player.getFishingLineW()+getWidth()/300, player.getFishingLineH());
         g.setColor(new Color(167, 172, 186));
         g.fillRect(player.getFishingLineX(),player.getFishingLineY(), player.getFishingLineW(), player.getFishingLineH());
         player.saveGame();
@@ -143,7 +145,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             }
             else if(currentPage.getPageName().equals("Play"))
             {
-                player.dropLine();
+                clicked = new Point(player.getFishingLineX(),player.getFishingLineY()+player.getFishingLineH());
+                player.dropLine(getHeight());
                 boolean caughtAlready = false;
                 for(int i = 0; i < currentFishes.size(); i++)
                 {

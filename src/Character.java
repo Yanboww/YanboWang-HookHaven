@@ -26,10 +26,14 @@ public class Character implements ActionListener {
     private BufferedImage image;
     private Rectangle fishingLine;
     Timer t;
+    private int screenHeight;
+    private boolean isRetracting;
+
     public Character(int y)
     {
         score = 0;
         caughtFishTypes = new ArrayList<>();
+        screenHeight = 500;
         maxScore = retrievePlayerData();
         x = 0;
         this.y = y;
@@ -37,6 +41,7 @@ public class Character implements ActionListener {
         percentMap = 1;
         imageName = "Image/character.png";
         image = readImage();
+        isRetracting = false;
         fishingLine = new Rectangle(5,100,x + dimensionX/10,0);
         t = new Timer(100,this);
     }
@@ -199,12 +204,30 @@ public class Character implements ActionListener {
             return null;
         }
     }
-    public void dropLine()
+    public void dropLine(int height)
     {
+        screenHeight = height;
         t.start();
     }
+
     public void actionPerformed(ActionEvent e)
     {
-        setFishingLine(getFishingLineX(),getFishingLineY(),getFishingLineW(),getFishingLineH()+dimensionX/20);
+        if(screenHeight <= getFishingLineH()+getFishingLineY()){
+            setFishingLine(getFishingLineX(),getFishingLineY(),getFishingLineW(),getFishingLineH()-dimensionX/20);
+            isRetracting = true;
+        }
+        else if(isRetracting)
+        {
+           if(getFishingLineY()+getFishingLineH()>getY()+getY()/3)setFishingLine(getFishingLineX(),getFishingLineY(),getFishingLineW(),getFishingLineH()-dimensionX/20);
+           else {
+               isRetracting = false;
+               t.stop();
+           }
+        }
+        else{
+            setFishingLine(getFishingLineX(),getFishingLineY(),getFishingLineW(),getFishingLineH()+dimensionX/20);
+        }
+
     }
+
 }
