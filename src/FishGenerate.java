@@ -35,7 +35,7 @@ public class FishGenerate implements ActionListener{
             }
             spawnSpecial = false;
         }
-        for(int i = generatedFishes.size(); i < width/150+5;i++)
+        for(int i = generatedFishes.size(); i < width/200+5;i++)
         {
             int dice = (int)(Math.random()*200);
             String[] fishInfo;
@@ -77,7 +77,7 @@ public class FishGenerate implements ActionListener{
 
     public void generateAvailableFishes()
     {
-        availableFishes.add("bass 2 2 70");
+        availableFishes.add("bass 5 6 70");
         pointValue.put("bass",40);
         availableFishes.add("goldfish 6 7 100");
         pointValue.put("goldfish",30);

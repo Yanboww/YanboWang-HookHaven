@@ -10,7 +10,7 @@ public class GameTimer implements ActionListener {
     {
         gameTime = new Timer(1000,this);
         timeRemaining = new int[3];
-        timeRemaining[0] = 5;
+        timeRemaining[0] = 1;
     }
 
     public void startGame()

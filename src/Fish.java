@@ -62,7 +62,7 @@ public class Fish{
 
     public void changeHitBox(int x, int y,int width, int height)
     {
-        hitBox = new Rectangle(x,y,width/this.width,height/this.height);
+        hitBox = new Rectangle(x,y,width/this.width+3,height/this.height+3);
         this.x = x;
         this.y = y;
     }
