@@ -83,12 +83,13 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
         g.setColor(new Color(255,255,255));
         g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
+        g.drawString("Time Remaining - " + time,10,getHeight()/10);
         g.drawString("Score:  " + player.getScore(),10,getHeight()/10+getHeight()/10);
         if (time.contains("0:0"))
         {
-            g.setColor(new Color(200,0,0));
+            g.setColor(new Color(250,0,0));
+            g.drawString("Time Remaining - " + time,10,getHeight()/10);
         }
-        g.drawString("Time Remaining - " + time,10,getHeight()/10);
         player.setY(getHeight()/3+getHeight()/20);
         if(player.getDimensionX()!= getWidth())
         {
