@@ -42,6 +42,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
        {
            paintGame(g);
        }
+       else if(currentPage.getPageName().equals("game!"))
+       {
+           paintFinish(g);
+       }
     }
 
     public void paintMenu(Graphics g)
@@ -69,9 +73,9 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     {
         int[] timer = gameTime.getTimeRemaining();
         String time = timer[0] + ":" + timer[1] + timer[2];
-        if(time.equals("0:00")) {
+        if(time.equals("1:00")) {
             player.saveGame();
-            currentPage = new Page("menu");
+            currentPage = new Page("game!");
             gameTime = new GameTimer();
             return;
         }
@@ -96,14 +100,17 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             player.setDimensionX(getWidth());
             player.setX((int)((player.getDimensionX()- player.getDimensionX()/10)*player.getPercentMap()));
         }
-        player.setFishingLine(player.getX() + getWidth()/6-getWidth()/200+getWidth()/700,player.getY()+player.getY()/3,getWidth()/160-getWidth()/400, player.getFishingLineH());
+        player.setFishingLine(player.getX() + getWidth()/6-getWidth()/200+getWidth()/700,player.getY()+player.getY()/3-getHeight()/80,getWidth()/160-getWidth()/400, player.getFishingLineH());
         player.setDimensionX(getWidth());
         g.drawImage(player.getImage(),player.getX(),player.getY(),getWidth()/5,getHeight()/4,null);
         g.setColor(new Color(0, 0, 0));
         g.fillRect(player.getFishingLineX()-getWidth()/550,player.getFishingLineY(), player.getFishingLineW()+getWidth()/380, player.getFishingLineH());
         g.setColor(new Color(167, 172, 186));
         g.fillRect(player.getFishingLineX(),player.getFishingLineY(), player.getFishingLineW(), player.getFishingLineH());
-        player.saveGame();
+        if(player.getFishingLineH()>getHeight()/10)
+        {
+            g.drawImage(player.getHook(),player.getFishingLineX()-getWidth()/60,player.getFishingLineY()+player.getFishingLineH(),getWidth()/40,getHeight()/40,this);
+        }
         for(Fish swim : currentFishes)
         {
             if(swim.isRecentSpawned())
@@ -131,6 +138,16 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             //see fish hit boxes
             //g.drawRect(swim.getX(),swim.getY(),getWidth()/swim.getWidth(),getHeight()/swim.getHeight());
         }
+    }
+    public void paintFinish(Graphics g)
+    {
+        g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
+        g.fillRect(getWidth()/3,getHeight()/4-getHeight()/35,getWidth()/3+getWidth()/18,getHeight()/2+getHeight()/17);
+        g.setColor(new Color(100,180,255));
+        g.fillRect(getWidth()/3+getWidth()/40,getHeight()/4,getWidth()/3,getHeight()/2);
+        g.setColor(new Color(255,255,255));
+        g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
+        g.drawString("Score: " + player.getScore(), getWidth()/3+getWidth()/35,getHeight()/4+getHeight()/16);
     }
     public void mousePressed(MouseEvent e) {
 

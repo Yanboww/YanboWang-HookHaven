@@ -24,6 +24,7 @@ public class Character implements ActionListener {
     private double percentMap;
     private String imageName;
     private BufferedImage image;
+    private BufferedImage hook;
     private Rectangle fishingLine;
     Timer t;
     private int screenHeight;
@@ -41,6 +42,7 @@ public class Character implements ActionListener {
         dimensionX = 500;
         percentMap = 1;
         imageName = "Image/character.png";
+        hook = readImage("Image/hook.png");
         image = readImage();
         isRetracting = false;
         caughtAlready = false;
@@ -195,6 +197,7 @@ public class Character implements ActionListener {
     {
         return image;
     }
+    public BufferedImage getHook(){return hook;}
     public BufferedImage readImage()
     {
         try{
@@ -202,7 +205,19 @@ public class Character implements ActionListener {
         }
         catch(IOException e)
         {
-            System.out.println("e");
+            System.out.println("error");
+            return null;
+        }
+    }
+
+    public BufferedImage readImage(String imageName)
+    {
+        try{
+            return ImageIO.read(new File(imageName));
+        }
+        catch(IOException e)
+        {
+            System.out.println("error");
             return null;
         }
     }

@@ -19,6 +19,10 @@ public class Page {
             pageButtons.add(new Button("Help",200,500));
             pageButtons.add(new Button("Quit",200,600));
         }
+        else if(pageName.equals("game!"))
+        {
+            pageButtons.add(new Button("Play Again",200,500));
+        }
         return pageButtons;
     }
 
