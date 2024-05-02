@@ -73,7 +73,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     {
         int[] timer = gameTime.getTimeRemaining();
         String time = timer[0] + ":" + timer[1] + timer[2];
-        if(time.equals("1:00")) {
+        if(time.equals("0:50")) {
             player.saveGame();
             currentPage = new Page("game!");
             gameTime = new GameTimer();
@@ -142,12 +142,28 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     public void paintFinish(Graphics g)
     {
         g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
-        g.fillRect(getWidth()/3,getHeight()/4-getHeight()/35,getWidth()/3+getWidth()/18,getHeight()/2+getHeight()/17);
+        g.setColor(new Color(255,255,255));
+        g.fillRect(getWidth()/4,getHeight()/4-getHeight()/35,getWidth()/2+getWidth()/18,getHeight()/2+getHeight()/17);
         g.setColor(new Color(100,180,255));
-        g.fillRect(getWidth()/3+getWidth()/40,getHeight()/4,getWidth()/3,getHeight()/2);
+        g.fillRect(getWidth()/4+getWidth()/40,getHeight()/4,getWidth()/2,getHeight()/2);
         g.setColor(new Color(255,255,255));
         g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
-        g.drawString("Score: " + player.getScore(), getWidth()/3+getWidth()/35,getHeight()/4+getHeight()/16);
+        g.drawString("Score: " + player.getScore(), getWidth()/4+getWidth()/30,getHeight()/4+getHeight()/16);
+        g.drawString("High Score:" + player.getMaxScore(), getWidth()/4+getWidth()/30,getHeight()/4+getHeight()/16+getHeight()/12);
+        g.drawString("Hooks Dropped:" + player.getHookDropped(), getWidth()/4+getWidth()/30,getHeight()/4+getHeight()/16+2*getHeight()/12);
+        g.drawString("Fish Caught:" + player.getFishCaught(), getWidth()/4+getWidth()/30,getHeight()/4+getHeight()/16+3*getHeight()/12);
+        g.drawString("Accuracy:" + (int)((double)player.getFishCaught()/ player.getHookDropped()*100) + "%", getWidth()/4+getWidth()/30,getHeight()/4+getHeight()/16+4*getHeight()/12);
+        g.drawImage(readImage("Image/People.png"),getWidth()/4+4*getWidth()/30,getHeight()/4+getHeight()/16+4*getHeight()/11,getWidth()/20,getHeight()/20,this);
+        g.drawImage(readImage("Image/Redo.png"),getWidth()/4+7*getWidth()/30,getHeight()/4+getHeight()/16+4*getHeight()/11,getWidth()/15,getHeight()/15,this);
+        g.drawImage(readImage("Image/Exit.png"),getWidth()/4+10*getWidth()/30,getHeight()/4+getHeight()/16+4*getHeight()/11,getWidth()/20,getHeight()/20,this);
+        int buttonFactor = 4;
+        for(Button currentButtons : currentPage.getCurrentButtons())
+        {
+            currentButtons.setRec(getWidth()/4+buttonFactor*getWidth()/30,getHeight()/4+getHeight()/16+4*getHeight()/11,getWidth()/22,getHeight()/15);
+            buttonFactor +=3;
+        }
+
+
     }
     public void mousePressed(MouseEvent e) {
 
@@ -170,8 +186,29 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             }
             else if(currentPage.getPageName().equals("Play"))
             {
+                player.incrementHookDrop();
                 player.dropLine(getHeight());
                 generator.generateFishes(getWidth(),currentFishes);
+            }
+            else if(currentPage.getPageName().equals("game!"))
+            {
+                for(Button currentButtons : currentPage.getCurrentButtons())
+                {
+                    if(currentButtons.getButton().contains(clicked))
+                    {
+                        player.clearStat();
+                        if(currentButtons.getName().equals("exit"))
+                        {
+                            currentPage = new Page("menu");
+                        }
+                        else if(currentButtons.getName().equals("replay"))
+                        {
+                            currentPage = new Page("Play");
+                            gameTime.startGame();
+                            generator.startTimer();
+                        }
+                    }
+                }
             }
         }
 

@@ -21,7 +21,10 @@ public class Page {
         }
         else if(pageName.equals("game!"))
         {
-            pageButtons.add(new Button("Play Again",200,500));
+            pageButtons.add(new Button("check FishDex",200,500));
+            pageButtons.add(new Button("replay",200,500));
+            pageButtons.add(new Button("exit",200,500));
+
         }
         return pageButtons;
     }

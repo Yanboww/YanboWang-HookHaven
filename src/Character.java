@@ -30,6 +30,8 @@ public class Character implements ActionListener {
     private int screenHeight;
     private boolean isRetracting;
     private boolean caughtAlready;
+    private int hookDropped;
+    private int fishCaught;
 
     public Character(int y)
     {
@@ -48,11 +50,33 @@ public class Character implements ActionListener {
         caughtAlready = false;
         fishingLine = new Rectangle(5,100,x + dimensionX/10,0);
         t = new Timer(100,this);
+        hookDropped = 0;
+        fishCaught = 0;
     }
 
     public void startAnimTimer()
     {
         t.start();
+    }
+    public void incrementHookDrop()
+    {
+        hookDropped++;
+    }
+    public int getHookDropped()
+    {
+        return hookDropped;
+    }
+    public int getFishCaught()
+    {
+        return fishCaught;
+    }
+
+    public void clearStat()
+    {
+        hookDropped = 0;
+        fishCaught = 0;
+        score = 0;
+
     }
 
     public void setFishingLine(int x, int y, int width, int length)
@@ -252,6 +276,7 @@ public class Character implements ActionListener {
             Rectangle hitBox = currentFishes.get(i).getHitBox();
             if(hitBox.contains(polePoint) && !caughtAlready && !isRetracting){
                 addPoints(currentFishes.get(i));
+                fishCaught++;
                 System.out.println(getScore());
                 System.out.println(getCaughtFishTypes());
                 currentFishes.remove(i);
