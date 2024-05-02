@@ -46,6 +46,15 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
        {
            paintFinish(g);
        }
+       else if(currentPage.getPageName().equals("Help"))
+       {
+           paintHelp(g);
+       }
+       else if(currentPage.getPageName().equals("Quit"))
+       {
+           player.saveGame();
+           System.exit(0);
+       }
     }
 
     public void paintMenu(Graphics g)
@@ -73,7 +82,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     {
         int[] timer = gameTime.getTimeRemaining();
         String time = timer[0] + ":" + timer[1] + timer[2];
-        if(time.equals("0:50")) {
+        if(time.equals("0:00")) {
             player.saveGame();
             currentPage = new Page("game!");
             gameTime = new GameTimer();
@@ -162,8 +171,19 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             currentButtons.setRec(getWidth()/4+buttonFactor*getWidth()/30,getHeight()/4+getHeight()/16+4*getHeight()/11,getWidth()/22,getHeight()/15);
             buttonFactor +=3;
         }
-
-
+    }
+    public void paintHelp(Graphics g)
+    {
+        g.setColor(new Color(100,180,255));
+        g.fillRect(0,0,getWidth(),getHeight());
+        g.drawImage(readImage("Image/Left-Arrow.png"),0,0,getWidth()/16,getHeight()/14,this);
+        currentPage.getCurrentButtons().get(0).setRec(0,0,getWidth()/16,getHeight()/14);
+        g.drawImage(readImage("Image/Mouse-Left.png"),0,getHeight()/4+getHeight()/20,getWidth()/10,getHeight()/8,this);
+        g.setColor(new Color(255,255,255));
+        g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
+        g.drawString("Left Click on the Mouse will",getWidth()/9,getHeight()/4+getHeight()/20);
+        g.drawString("drop the fishing line",getWidth()/9,getHeight()/4+2*getHeight()/18);
+        g.drawString("directly below the rod.",getWidth()/9,getHeight()/4+3*getHeight()/16);
     }
     public void mousePressed(MouseEvent e) {
 
@@ -206,6 +226,19 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                             currentPage = new Page("Play");
                             gameTime.startGame();
                             generator.startTimer();
+                        }
+                    }
+                }
+            }
+            else if(currentPage.getPageName().equals("Help"))
+            {
+                for(Button currentButtons : currentPage.getCurrentButtons())
+                {
+                    if(currentButtons.getButton().contains(clicked))
+                    {
+                        if(currentButtons.getName().equals("exit"))
+                        {
+                            currentPage = new Page("menu");
                         }
                     }
                 }

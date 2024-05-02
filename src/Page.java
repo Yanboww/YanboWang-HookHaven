@@ -24,7 +24,10 @@ public class Page {
             pageButtons.add(new Button("check FishDex",200,500));
             pageButtons.add(new Button("replay",200,500));
             pageButtons.add(new Button("exit",200,500));
-
+        }
+        else if(pageName.equals("Help"))
+        {
+            pageButtons.add(new Button("exit",200,500));
         }
         return pageButtons;
     }
