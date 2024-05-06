@@ -179,6 +179,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.fillRect(0,0,getWidth(),getHeight());
         g.drawImage(readImage("Image/Left-Arrow.png"),0,0,getWidth()/16,getHeight()/14,this);
         currentPage.getCurrentButtons().get(0).setRec(0,0,getWidth()/16,getHeight()/14);
+        g.drawImage(player.getImage(),getWidth()/3,0,getWidth()/4,getHeight()/5,this);
         g.drawImage(readImage("Image/Mouse-Left.png"),0,getHeight()/4+getHeight()/20,getWidth()/10,getHeight()/8,this);
         g.setColor(new Color(255,255,255));
         g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
