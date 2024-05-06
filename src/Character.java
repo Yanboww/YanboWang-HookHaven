@@ -131,13 +131,16 @@ public class Character implements ActionListener {
         try{
             f = new File("Data/save_file");
             fw = new FileWriter(f);
+            fw.write(Integer.toString(maxScore));
             if(!caughtFishTypes.isEmpty())
             {
-                fw.write(maxScore+"\n_____");
+                System.out.println("yep");
+                fw.write("\n_____");
                 for(String caughtFish : caughtFishTypes)
                 {
-                    fw.write(caughtFish);
+                    fw.write("\n" + caughtFish);
                 }
+                fw.close();
             }
         }
         catch (IOException e)
@@ -156,13 +159,16 @@ public class Character implements ActionListener {
             int number =0;
             while(s.hasNextLine())
             {
-                if(start == 0) number = Integer.parseInt(s.nextLine());
+                if(start == 0){
+                    number = Integer.parseInt(s.nextLine());
+                    start++;
+                    continue;
+                }
                 String currentLine = s.nextLine();
                 if(!currentLine.contains("_"))
                 {
-                    caughtFishTypes.add(s.nextLine());
+                    caughtFishTypes.add(currentLine);
                 }
-                start++;
             }
             return number;
         }
@@ -263,6 +269,7 @@ public class Character implements ActionListener {
            else {
                isRetracting = false;
                caughtAlready = false;
+               incrementHookDrop();
                t.stop();
            }
         }

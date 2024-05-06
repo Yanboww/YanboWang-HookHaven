@@ -82,7 +82,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     {
         int[] timer = gameTime.getTimeRemaining();
         String time = timer[0] + ":" + timer[1] + timer[2];
-        if(time.equals("0:00")) {
+        if(time.equals("0:50")) {
             player.saveGame();
             currentPage = new Page("game!");
             gameTime = new GameTimer();
@@ -206,7 +206,6 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             }
             else if(currentPage.getPageName().equals("Play"))
             {
-                player.incrementHookDrop();
                 player.dropLine(getHeight());
                 generator.generateFishes(getWidth(),currentFishes);
             }
