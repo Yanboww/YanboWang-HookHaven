@@ -134,7 +134,6 @@ public class Character implements ActionListener {
             fw.write(Integer.toString(maxScore));
             if(!caughtFishTypes.isEmpty())
             {
-                System.out.println("yep");
                 fw.write("\n_____");
                 for(String caughtFish : caughtFishTypes)
                 {
@@ -175,6 +174,24 @@ public class Character implements ActionListener {
         catch(FileNotFoundException e)
         {
             return score;
+        }
+    }
+
+    public void clearData()
+    {
+        caughtFishTypes.clear();
+        maxScore = 0;
+        score = 0;
+        File f;
+        FileWriter fw;
+        try{
+            f = new File("save_file");
+            fw = new FileWriter(f);
+            fw.write("");
+        }
+        catch(IOException e)
+        {
+            System.out.println("File is not found!");
         }
     }
 

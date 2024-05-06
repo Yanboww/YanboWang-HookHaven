@@ -48,6 +48,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
        }
        else if(currentPage.getPageName().equals("Help"))
        {
+           player.clearData();
            paintHelp(g);
        }
        else if(currentPage.getPageName().equals("Quit"))
@@ -82,7 +83,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     {
         int[] timer = gameTime.getTimeRemaining();
         String time = timer[0] + ":" + timer[1] + timer[2];
-        if(time.equals("0:50")) {
+        if(time.equals("0:00")) {
             player.saveGame();
             currentPage = new Page("game!");
             gameTime = new GameTimer();
@@ -184,6 +185,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.drawString("Left Click on the Mouse will",getWidth()/9,getHeight()/4+getHeight()/20);
         g.drawString("drop the fishing line",getWidth()/9,getHeight()/4+2*getHeight()/18);
         g.drawString("directly below the rod.",getWidth()/9,getHeight()/4+3*getHeight()/16);
+        g.drawImage(readImage("Image/aKey.png"),getHeight()/26*-1,getHeight()/4+5*getHeight()/16,getWidth()/5,getHeight()/6,this);
+        g.drawString("Move fisherman left",getWidth()/9+getWidth()/30,getHeight()/4+8*getHeight()/18);
+        g.drawImage(readImage("Image/dKey.png"),getHeight()/26*-1,getHeight()/4+9*getHeight()/16,getWidth()/5,getHeight()/6,this);
+        g.drawString("Move fisherman right",getWidth()/9+getWidth()/30,getHeight()/4+12*getHeight()/18);
+
     }
     public void mousePressed(MouseEvent e) {
 
