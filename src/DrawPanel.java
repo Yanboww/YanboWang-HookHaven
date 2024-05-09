@@ -38,7 +38,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
        {
           paintMenu(g);
        }
-       else if (currentPage.getPageName().equals("Play"))
+       else if(currentPage.getPageName().equals("Play"))
+       {
+           paintGameOption(g);
+       }
+       else if (currentPage.getPageName().equals("PlayGame"))
        {
            paintGame(g);
        }
@@ -48,7 +52,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
        }
        else if(currentPage.getPageName().equals("Help"))
        {
-           player.clearData();
+           //player.clearData();
            paintHelp(g);
        }
        else if(currentPage.getPageName().equals("Quit"))
@@ -60,11 +64,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
 
     public void paintMenu(Graphics g)
     {
-        g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
+        g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), this);
         int pageWidth = getWidth();
         int yOfRect = getHeight()/2;
         BufferedImage logo = readImage("Image/Logo.png");
-        g.drawImage(logo,pageWidth/4,getHeight()/5,pageWidth/2,getHeight()/6,null);
+        g.drawImage(logo,pageWidth/4,getHeight()/5,pageWidth/2,getHeight()/6,this);
         for(Button currentButtons : currentPage.getCurrentButtons())
         {
             g.setColor(new Color(0,0,0));
@@ -87,6 +91,9 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             player.saveGame();
             currentPage = new Page("game!");
             gameTime = new GameTimer();
+            generator.endTimer();
+            currentFishes.clear();
+            generator.generateAvailableFishes();
             return;
         }
         t.start();
@@ -94,7 +101,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         {
             generator.generateFishes(getWidth(),currentFishes);
         }
-        g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
+        g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), this);
         g.setColor(new Color(255,255,255));
         g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
         g.drawString("Time Remaining - " + time,10,getHeight()/10);
@@ -112,7 +119,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         }
         player.setFishingLine(player.getX() + getWidth()/6-getWidth()/200+getWidth()/700,player.getY()+player.getY()/3-getHeight()/80,getWidth()/160-getWidth()/400, player.getFishingLineH());
         player.setDimensionX(getWidth());
-        g.drawImage(player.getImage(),player.getX(),player.getY(),getWidth()/5,getHeight()/4,null);
+        g.drawImage(player.getImage(),player.getX(),player.getY(),getWidth()/5,getHeight()/4,this);
         g.setColor(new Color(0, 0, 0));
         g.fillRect(player.getFishingLineX()-getWidth()/550,player.getFishingLineY(), player.getFishingLineW()+getWidth()/380, player.getFishingLineH());
         g.setColor(new Color(167, 172, 186));
@@ -144,14 +151,14 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             swim.setMapPercent((double)swim.getX()/(getWidth()-getWidth()/10));
             swim.setY(getHeight()-getHeight()/6,getHeight());
             swim.changeHitBox(swim.getX(),swim.getY(),getWidth(),getHeight());
-            g.drawImage(swim.getImage(),swim.getX(),swim.getY(),getWidth()/swim.getWidth(),getHeight()/swim.getHeight(),null);
+            g.drawImage(swim.getImage(),swim.getX(),swim.getY(),getWidth()/swim.getWidth(),getHeight()/swim.getHeight(),this);
             //see fish hit boxes
             //g.drawRect(swim.getX(),swim.getY(),getWidth()/swim.getWidth(),getHeight()/swim.getHeight());
         }
     }
     public void paintFinish(Graphics g)
     {
-        g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), null);
+        g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), this);
         g.setColor(new Color(255,255,255));
         g.fillRect(getWidth()/4,getHeight()/4-getHeight()/35,getWidth()/2+getWidth()/18,getHeight()/2+getHeight()/17);
         g.setColor(new Color(100,180,255));
@@ -192,6 +199,27 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.drawString("Move fisherman right",getWidth()/9+getWidth()/30,getHeight()/4+12*getHeight()/18);
 
     }
+
+    public void paintGameOption(Graphics g)
+    {
+        g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), this);
+        g.fillRect(getWidth()/10,getHeight()/4,getWidth()-getWidth()/5,getHeight()/2);
+        g.setColor(new Color(255,255,255));
+        g.fillRect(getWidth()/10 + getWidth()/8,getHeight()/4+getHeight()/28,(getWidth()-getWidth()/5)/3,getHeight()/2 - getHeight()/14);
+        g.fillRect(4*getWidth()/10 + getWidth()/8,getHeight()/4+getHeight()/28,(getWidth()-getWidth()/5)/3,getHeight()/2 - getHeight()/14);
+        g.setColor(new Color(100,180,255));
+        g.fillRect(getWidth()/10 + getWidth()/8,getHeight()/4+getHeight()/20,(getWidth()-getWidth()/5)/3,getHeight()/2 - getHeight()/10);
+        currentPage.getCurrentButtons().get(0).setRec(getWidth()/10 + getWidth()/8,getHeight()/4+getHeight()/20,(getWidth()-getWidth()/5)/3,getHeight()/2 - getHeight()/10);
+        g.fillRect(4*getWidth()/10 + getWidth()/8,getHeight()/4+getHeight()/20,(getWidth()-getWidth()/5)/3,getHeight()/2 - getHeight()/10);
+        currentPage.getCurrentButtons().get(1).setRec(4*getWidth()/10 + getWidth()/8,getHeight()/4+getHeight()/20,(getWidth()-getWidth()/5)/3,getHeight()/2 - getHeight()/10);
+        g.setColor(new Color(255,255,255));
+        g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
+        g.drawString("New Game",getWidth()/10 + getWidth()/7,getHeight()/4+getHeight()/4);
+        g.drawString("Load Game",4*getWidth()/10 + getWidth()/8,getHeight()/4+getHeight()/4);
+
+
+
+    }
     public void mousePressed(MouseEvent e) {
 
         Point clicked = e.getPoint();
@@ -211,7 +239,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                     }
                 }
             }
-            else if(currentPage.getPageName().equals("Play"))
+            else if(currentPage.getPageName().equals("PlayGame"))
             {
                 player.dropLine(getHeight());
                 generator.generateFishes(getWidth(),currentFishes);
@@ -249,6 +277,22 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                     }
                 }
             }
+            else if (currentPage.getPageName().equals("Play"))
+            {
+                for(Button currentButton : currentPage.getCurrentButtons())
+                {
+                    if(currentButton.getButton().contains(clicked))
+                    {
+                        if(currentButton.getName().equals("Clear"))
+                        {
+                            player.clearData();
+                        }
+                        currentPage = new Page("PlayGame");
+                        gameTime.startGame();
+                        generator.startTimer();
+                    }
+                }
+            }
         }
 
     }
@@ -271,7 +315,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     public void keyTyped(KeyEvent e){ }
     public void keyReleased(KeyEvent e){}
     public void actionPerformed(ActionEvent e){
-       if(currentPage.getPageName().equals("Play"))
+       if(currentPage.getPageName().equals("PlayGame"))
        {
            for(int i = 0; i < currentFishes.size(); i++)
            {

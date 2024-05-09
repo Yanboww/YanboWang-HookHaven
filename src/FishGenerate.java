@@ -70,6 +70,7 @@ public class FishGenerate implements ActionListener{
     {
         t.start();
     }
+    public void endTimer(){t.stop();}
     public void actionPerformed(ActionEvent e) {
         spawnSpecial = true;
         counter++;

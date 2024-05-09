@@ -29,6 +29,11 @@ public class Page {
         {
             pageButtons.add(new Button("exit",200,500));
         }
+        else if(pageName.equals("Play"))
+        {
+            pageButtons.add(new Button("Clear",200,500));
+            pageButtons.add(new Button("Don't Clear",200,500));
+        }
         return pageButtons;
     }
 
