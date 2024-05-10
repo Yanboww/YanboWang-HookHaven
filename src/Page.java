@@ -34,6 +34,16 @@ public class Page {
             pageButtons.add(new Button("Clear",200,500));
             pageButtons.add(new Button("Don't Clear",200,500));
         }
+        else if(pageName.equals("PlayGame"))
+        {
+            pageButtons.add(new Button("pause",200,500));
+        }
+        else if(pageName.equals("pause"))
+        {
+            pageButtons.add(new Button("continue",200,500));
+            pageButtons.add(new Button("check",200,500));
+            pageButtons.add(new Button("return",200,500));
+        }
         return pageButtons;
     }
 

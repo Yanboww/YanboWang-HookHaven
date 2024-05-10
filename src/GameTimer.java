@@ -17,6 +17,7 @@ public class GameTimer implements ActionListener {
     {
         gameTime.start();
     }
+    public void pauseGame(){gameTime.stop();}
 
     public int[] getTimeRemaining()
     {
