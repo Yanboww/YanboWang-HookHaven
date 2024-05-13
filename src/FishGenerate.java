@@ -19,6 +19,7 @@ public class FishGenerate implements ActionListener{
 
     public ArrayList<Fish> generateFishes(int width, ArrayList<Fish> generatedFishes)
     {
+        int speedVariability = (int)(Math.random()*5)-2;
         if(spawnSpecial)
         {
             if(counter == 2){
@@ -59,8 +60,16 @@ public class FishGenerate implements ActionListener{
                 fishInfo = availableFishes.get(0).split(" ");
             }
             else{
-                fishInfo = availableFishes.get(1).split(" ");
+                int bombOrFish = (int)(Math.random()*2);
+                if(bombOrFish == 0)
+                {
+                    fishInfo = availableFishes.get(1).split(" ");
+                }
+                else {
+                    fishInfo = availableFishes.get(5).split(" ");
+                }
             }
+            if(!fishInfo[0].equals("treasureChest")) fishInfo[3] =Integer.toString( Integer.parseInt(fishInfo[3])+speedVariability);
             generatedFishes.add(new Fish(fishInfo[0],pointValue.get(fishInfo[0]) ,Integer.parseInt(fishInfo[1]),Integer.parseInt(fishInfo[2]),Integer.parseInt(fishInfo[3])));
         }
         return generatedFishes;
@@ -80,14 +89,17 @@ public class FishGenerate implements ActionListener{
     {
         availableFishes.add("bass 5 6 70");
         pointValue.put("bass",40);
-        availableFishes.add("goldfish 6 7 100");
-        pointValue.put("goldfish",30);
+        availableFishes.add("goldfish 6 7 80");
+        pointValue.put("goldfish",1);
         availableFishes.add("stingray 3 4 50");
         pointValue.put("stingray",50);
         availableFishes.add("shark 4 2 40");
         pointValue.put("shark",80);
         availableFishes.add("treasureChest 15 15 0");
         pointValue.put("treasureChest",50);
+        availableFishes.add("bomb 15 15 100 ");
+        pointValue.put("bomb",-10);
+
     }
 
     private int countFishInList(String name, ArrayList<Fish> currentFishes)
