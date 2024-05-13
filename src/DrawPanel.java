@@ -113,7 +113,6 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.drawString("Score:  " + player.getScore(),10,getHeight()/10+2*getHeight()/10);
         g.drawImage(readImage("Image/List.png"),getWidth()-getWidth()/10,getHeight()/10,getWidth()/15,getHeight()/15,this);
         currentPage.getCurrentButtons().get(0).setRec(getWidth()-getWidth()/10,getHeight()/10,getWidth()/15,getHeight()/15);
-        g.drawRect(getWidth()-getWidth()/10,getHeight()/10,getWidth()/15,getHeight()/15);
         if (time.contains("0:0"))
         {
             g.setColor(new Color(250,0,0));
@@ -238,7 +237,6 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.drawString("Score:  " + player.getScore(),10,getHeight()/10+2*getHeight()/10);
         g.drawImage(readImage("Image/List.png"),getWidth()-getWidth()/10,getHeight()/10,getWidth()/15,getHeight()/15,this);
         currentPage.getCurrentButtons().get(0).setRec(getWidth()-getWidth()/10,getHeight()/10,getWidth()/15,getHeight()/15);
-        g.drawRect(getWidth()-getWidth()/10,getHeight()/10,getWidth()/15,getHeight()/15);
         if (time.contains("0:0"))
         {
             g.setColor(new Color(250,0,0));
@@ -300,10 +298,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         currentPage.getCurrentButtons().get(0).setRec(getWidth()/4+getWidth()/30+getWidth()/12,getHeight()/4+getHeight()/16,getWidth()/3,getHeight()/15);
         g.setColor(new Color(196, 181, 35));
         g.fillRect(getWidth()/4+getWidth()/30+getWidth()/12,getHeight()/4+3*getHeight()/16+getHeight()/45,getWidth()/3,getHeight()/15);
-        currentPage.getCurrentButtons().get(0).setRec(getWidth()/4+getWidth()/30+getWidth()/12,getHeight()/4+3*getHeight()/16+getHeight()/45,getWidth()/3,getHeight()/15);
+        currentPage.getCurrentButtons().get(1).setRec(getWidth()/4+getWidth()/30+getWidth()/12,getHeight()/4+3*getHeight()/16+getHeight()/45,getWidth()/3,getHeight()/15);
         g.setColor(new Color(196, 48, 35));
-        currentPage.getCurrentButtons().get(0).setRec(getWidth()/4+getWidth()/30+getWidth()/12,getHeight()/4+3*getHeight()/16+getHeight()/45,getWidth()/3,getHeight()/15);
         g.fillRect(getWidth()/4+getWidth()/30+getWidth()/12,getHeight()/4+5*getHeight()/16+getHeight()/21,getWidth()/3,getHeight()/15);
+        currentPage.getCurrentButtons().get(2).setRec(getWidth()/4+getWidth()/30+getWidth()/12,getHeight()/4+5*getHeight()/16+getHeight()/21,getWidth()/3,getHeight()/15);
         g.setColor(new Color(255,255,255));
         g.drawImage(readImage("Image/PlayButton.png"),getWidth()/4+getWidth()/30,getHeight()/4+getHeight()/16,getWidth()/15,getHeight()/15,this);
         g.drawImage(readImage("Image/Floppy-Drive.png"),getWidth()/4+getWidth()/30,getHeight()/4+3*getHeight()/16+getHeight()/30,getWidth()/15,getHeight()/15,this);
@@ -363,8 +361,6 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                         else if(currentButtons.getName().equals("replay"))
                         {
                             currentPage = new Page("Play");
-                            gameTime.startGame();
-                            generator.startTimer();
                         }
                     }
                 }
@@ -393,6 +389,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                             player.clearData();
                         }
                         currentPage = new Page("PlayGame");
+                        gameTime = new GameTimer();
                         gameTime.startGame();
                         generator.startTimer();
                     }
@@ -407,6 +404,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                         if(currentButton.getName().equals("continue"))
                         {
                             currentPage = new Page("PlayGame");
+                            gameTime.startGame();
+                            generator.startTimer();
                         }
                         else if(currentButton.getName().equals("return"))
                         {
