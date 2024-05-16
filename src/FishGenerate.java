@@ -19,7 +19,7 @@ public class FishGenerate implements ActionListener{
 
     public ArrayList<Fish> generateFishes(int width, ArrayList<Fish> generatedFishes)
     {
-        int speedVariability = (int)(Math.random()*5)-2;
+        int speedVariability = (int)(Math.random()*30)-5;
         if(spawnSpecial)
         {
             if(counter == 2){
@@ -60,13 +60,17 @@ public class FishGenerate implements ActionListener{
                 fishInfo = availableFishes.get(0).split(" ");
             }
             else{
-                int bombOrFish = (int)(Math.random()*2);
-                if(bombOrFish == 0)
+                int bombOrFish = (int)(Math.random()*100);
+                if(bombOrFish >20)
                 {
                     fishInfo = availableFishes.get(1).split(" ");
                 }
                 else {
-                    fishInfo = availableFishes.get(5).split(" ");
+                    bombOrFish = (int)(Math.random()*100);
+                    if(bombOrFish>4){
+                        fishInfo = availableFishes.get(5).split(" ");
+                    }
+                    else fishInfo = availableFishes.get(6).split(" ");
                 }
             }
             if(!fishInfo[0].equals("treasureChest")) fishInfo[3] =Integer.toString( Integer.parseInt(fishInfo[3])+speedVariability);
@@ -90,15 +94,17 @@ public class FishGenerate implements ActionListener{
         availableFishes.add("bass 5 6 70");
         pointValue.put("bass",40);
         availableFishes.add("goldfish 6 7 80");
-        pointValue.put("goldfish",1);
+        pointValue.put("goldfish",10);
         availableFishes.add("stingray 3 4 50");
         pointValue.put("stingray",50);
         availableFishes.add("shark 4 2 40");
         pointValue.put("shark",80);
         availableFishes.add("treasureChest 15 15 0");
         pointValue.put("treasureChest",50);
-        availableFishes.add("bomb 15 15 100 ");
+        availableFishes.add("bomb 8 8 100 ");
         pointValue.put("bomb",-10);
+        availableFishes.add("big_bomb 4 2 100 ");
+        pointValue.put("big_bomb",-100000000);
 
     }
 

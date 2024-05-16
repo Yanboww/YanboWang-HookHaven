@@ -104,6 +104,7 @@ public class Character implements ActionListener {
     public void addPoints(Fish f)
     {
         score += f.getPointGain();
+        if(score < 0) score = 0;
         maxScore = Math.max(score,maxScore);
         String name = f.getName();
         if(!caughtFishTypes.contains(name))

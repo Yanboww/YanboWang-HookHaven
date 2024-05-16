@@ -81,6 +81,7 @@ public class Fish{
           else if(name.equals("treasureChest")) y = height+height/8;
           else{
               y = (int)(Math.random()*(height/2-height/8))+(height/2+height/4);
+              y += (int)(Math.random()*(2*height/10))-height/10;
           }
       }
       if(dimensionY!=this.dimensionY)
