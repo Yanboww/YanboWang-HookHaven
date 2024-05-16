@@ -44,6 +44,10 @@ public class Page {
             pageButtons.add(new Button("check",200,500));
             pageButtons.add(new Button("return",200,500));
         }
+        else if(pageName.equals("index"))
+        {
+            pageButtons.add(new Button("return",200,500));
+        }
         return pageButtons;
     }
 

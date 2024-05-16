@@ -19,6 +19,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     Timer t;
     private FishGenerate generator;
     private GameTimer gameTime;
+    private String prevPage;
 
     public DrawPanel() {
         currentPage = new Page("menu");
@@ -63,6 +64,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
        else if(currentPage.getPageName().equals("pause"))
        {
            paintPause(g);
+       }
+       else if(currentPage.getPageName().equals("index"))
+       {
+           paintIndex(g);
        }
     }
 
@@ -312,6 +317,18 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.drawString("Save & Exit", getWidth()/4+getWidth()/30+getWidth()/9-getWidth()/40,getHeight()/4+3*getHeight()/9+getHeight()/12);
 
     }
+    public void paintIndex(Graphics g)
+    {
+        g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), this);
+        g.drawImage(readImage("Image/Left-Arrow.png"),getWidth()/20,getHeight()/10,getWidth()/16,getHeight()/14,this);
+        currentPage.getCurrentButtons().get(0).setRec(getWidth()/20,getHeight()/10,getWidth()/16,getHeight()/14);
+        ArrayList<String> availableFishes = FishGenerate.getAvailableFishes();
+        Sort.sort(availableFishes);
+        Sort.removeNum(availableFishes);
+
+
+
+    }
     public void mousePressed(MouseEvent e) {
 
         Point clicked = e.getPoint();
@@ -362,6 +379,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                         {
                             currentPage = new Page("Play");
                         }
+                        else{
+                            prevPage = "game!";
+                            currentPage = new Page("index");
+                        }
                     }
                 }
             }
@@ -410,6 +431,23 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                         else if(currentButton.getName().equals("return"))
                         {
                             currentPage = new Page("game!");
+                        }
+                        else {
+                            prevPage = "pause";
+                            currentPage = new Page("index");
+                        }
+                    }
+                }
+            }
+            else if(currentPage.getPageName().equals("index"))
+            {
+                for(Button currentButton : currentPage.getCurrentButtons())
+                {
+                    if(currentButton.getButton().contains(clicked))
+                    {
+                        if(currentButton.getName().equals("return"))
+                        {
+                            currentPage = new Page(prevPage);
                         }
                     }
                 }

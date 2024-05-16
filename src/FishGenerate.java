@@ -118,4 +118,7 @@ public class FishGenerate implements ActionListener{
         return count;
     }
 
+    public static ArrayList<String> getAvailableFishes() {
+        return availableFishes;
+    }
 }
