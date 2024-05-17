@@ -17,7 +17,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     private Character player;
     private static ArrayList<Fish> currentFishes;
     Timer t;
-    private FishGenerate generator;
+    private ItemGenerate generator;
     private GameTimer gameTime;
     private String prevPage;
 
@@ -27,7 +27,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         setFocusable(true);
         this.addKeyListener(this);
         player = new Character(-1000);
-        generator =  new FishGenerate();
+        generator =  new ItemGenerate();
         t = new Timer(100,this);
         currentFishes = new ArrayList<>();
         gameTime = new GameTimer();
@@ -322,10 +322,49 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), this);
         g.drawImage(readImage("Image/Left-Arrow.png"),getWidth()/20,getHeight()/10,getWidth()/16,getHeight()/14,this);
         currentPage.getCurrentButtons().get(0).setRec(getWidth()/20,getHeight()/10,getWidth()/16,getHeight()/14);
-        ArrayList<String> availableFishes = FishGenerate.getAvailableFishes();
-        Sort.sort(availableFishes);
-        Sort.removeNum(availableFishes);
-
+        ArrayList<String> availableFishes = ItemGenerate.getAvailableFishes();
+        availableFishes.add("walker_fish");
+        SortUtilities.sort(availableFishes);
+        SortUtilities.removeNum(availableFishes);
+        int incrementX= getWidth()/10;
+        int incrementY = getHeight()/10;
+        int countFish = 0;
+        g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
+        for(String displayFish : availableFishes)
+        {
+            int width = getWidth()/4;
+            int height = getHeight()/6;
+            if(displayFish.equals("treasureChest"))
+            {
+                width = getWidth()/10;
+                height = getHeight()/10;
+            }
+            if(countFish%3==0 && countFish!=0){
+                incrementY+=getHeight()/4;
+                incrementX = getWidth()/10;
+            }
+            if(player.getCaughtFishTypes().contains(displayFish))
+            {
+                g.drawImage(readImage("Image/" + displayFish + ".png"), incrementX, incrementY, width, height, this);
+                String fishName = displayFish;
+                if(fishName.contains("_"))
+                {
+                    int indexOfChar = fishName.indexOf("_");
+                    fishName = fishName.substring(0,indexOfChar) + " " + fishName.substring(indexOfChar+1);
+                }
+                else if(fishName.equals("treasureChest"))
+                {
+                    fishName = "chest";
+                }
+                g.drawString(fishName,incrementX,incrementY+getHeight()/5);
+            }
+            else{
+                g.drawImage(readImage("Image/Mystery.png"), incrementX, incrementY, getWidth()/4, getHeight()/5, this);
+                g.drawString("???",incrementX+getWidth()/10,incrementY+getHeight()/5);
+            }
+            incrementX+=getWidth()/3-getWidth()/50;
+            countFish++;
+        }
 
 
     }

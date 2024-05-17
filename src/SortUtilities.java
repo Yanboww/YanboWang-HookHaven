@@ -1,6 +1,5 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-public class Sort {
+public class SortUtilities {
     public static void sort(ArrayList<String> list) {
         String[] sortAid = new String[list.size()];
         sortProcess(list,sortAid,0,sortAid.length-1);

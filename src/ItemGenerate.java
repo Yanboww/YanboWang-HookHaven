@@ -3,14 +3,14 @@ import java.util.HashMap;
 import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-public class FishGenerate implements ActionListener{
+public class ItemGenerate implements ActionListener{
     private Timer t;
     private static ArrayList<String> availableFishes;
     private static HashMap<String,Integer> pointValue;
     public static boolean spawnSpecial;
     int counter = 0;
 
-    public FishGenerate(){
+    public ItemGenerate(){
         availableFishes = new ArrayList<>();
         pointValue = new HashMap<>();
         t = new Timer(15000,this);
@@ -91,20 +91,22 @@ public class FishGenerate implements ActionListener{
 
     public void generateAvailableFishes()
     {
-        availableFishes.add("bass 5 6 70");
-        pointValue.put("bass",40);
-        availableFishes.add("goldfish 6 7 80");
-        pointValue.put("goldfish",10);
-        availableFishes.add("stingray 3 4 50");
-        pointValue.put("stingray",50);
-        availableFishes.add("shark 4 2 40");
-        pointValue.put("shark",80);
-        availableFishes.add("treasureChest 15 15 0");
-        pointValue.put("treasureChest",50);
-        availableFishes.add("bomb 8 8 100 ");
-        pointValue.put("bomb",-10);
-        availableFishes.add("big_bomb 4 2 100 ");
-        pointValue.put("big_bomb",-100000000);
+        if(availableFishes.size()==0){
+            availableFishes.add("bass 5 6 70");
+            pointValue.put("bass",40);
+            availableFishes.add("goldfish 6 7 80");
+            pointValue.put("goldfish",10);
+            availableFishes.add("stingray 3 4 50");
+            pointValue.put("stingray",50);
+            availableFishes.add("shark 4 2 40");
+            pointValue.put("shark",80);
+            availableFishes.add("treasureChest 15 15 0");
+            pointValue.put("treasureChest",50);
+            availableFishes.add("bomb 8 8 100 ");
+            pointValue.put("bomb",-10);
+            availableFishes.add("big_bomb 4 2 100 ");
+            pointValue.put("big_bomb",-100000000);
+        }
 
     }
 
@@ -119,6 +121,8 @@ public class FishGenerate implements ActionListener{
     }
 
     public static ArrayList<String> getAvailableFishes() {
-        return availableFishes;
+        ArrayList<String> returnList = new ArrayList<>();
+        returnList.addAll(availableFishes);
+        return returnList;
     }
 }

@@ -135,7 +135,7 @@ public class Character implements ActionListener {
             fw.write(Integer.toString(maxScore));
             if(!caughtFishTypes.isEmpty())
             {
-                fw.write("\n_____");
+                fw.write("\n++++");
                 for(String caughtFish : caughtFishTypes)
                 {
                     fw.write("\n" + caughtFish);
@@ -165,7 +165,7 @@ public class Character implements ActionListener {
                     continue;
                 }
                 String currentLine = s.nextLine();
-                if(!currentLine.contains("_"))
+                if(!currentLine.contains("+"))
                 {
                     caughtFishTypes.add(currentLine);
                 }
