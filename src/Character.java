@@ -32,6 +32,7 @@ public class Character implements ActionListener {
     private boolean caughtAlready;
     private int hookDropped;
     private int fishCaught;
+    private int pointChange;
 
     public Character(int y)
     {
@@ -52,6 +53,7 @@ public class Character implements ActionListener {
         t = new Timer(100,this);
         hookDropped = 0;
         fishCaught = 0;
+        pointChange = 0;
     }
 
     public void startAnimTimer()
@@ -101,16 +103,30 @@ public class Character implements ActionListener {
         return (int)fishingLine.getHeight();
     }
 
-    public void addPoints(Fish f)
+    public int addPoints(Fish f)
     {
-        score += f.getPointGain();
-        if(score < 0) score = 0;
+        int pointChange = f.getPointGain();
+        score += pointChange;
+        if(score < 0){
+            pointChange = (score - pointChange)*-1;
+            score = 0;
+        }
         maxScore = Math.max(score,maxScore);
         String name = f.getName();
         if(!caughtFishTypes.contains(name))
         {
             caughtFishTypes.add(name);
         }
+        return pointChange;
+    }
+    public int getPointChange()
+    {
+        return pointChange;
+    }
+
+    public void resetPointChange()
+    {
+        pointChange = 0;
     }
 
     public int getScore() {
@@ -300,7 +316,7 @@ public class Character implements ActionListener {
         {
             Rectangle hitBox = currentFishes.get(i).getHitBox();
             if(hitBox.contains(polePoint) && !caughtAlready && !isRetracting){
-                addPoints(currentFishes.get(i));
+                pointChange = addPoints(currentFishes.get(i));
                 fishCaught++;
                 System.out.println(getScore());
                 System.out.println(getCaughtFishTypes());

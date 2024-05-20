@@ -20,7 +20,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     private ItemGenerate generator;
     private GameTimer gameTime;
     private String prevPage;
-
+    private int count = 0;
     public DrawPanel() {
         currentPage = new Page("menu");
         this.addMouseListener(this);
@@ -128,6 +128,19 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         {
             player.setDimensionX(getWidth());
             player.setX((int)((player.getDimensionX()- player.getDimensionX()/10)*player.getPercentMap()));
+        }
+        int pointChange = player.getPointChange();
+        if(pointChange!=0)
+        {
+            if(pointChange<0)
+            {
+                g.setColor(new Color(200,0,0));
+                g.drawString(Integer.toString(pointChange),player.getX()+getWidth()/5, getHeight()/2);
+            }
+            else{
+                g.setColor(new Color(0,200,0));
+                g.drawString("+" +pointChange,player.getX()+getWidth()/5, getHeight()/2);
+            }
         }
         player.setFishingLine(player.getX() + getWidth()/6-getWidth()/200+getWidth()/700,player.getY()+player.getY()/3-getHeight()/80,getWidth()/160-getWidth()/400, player.getFishingLineH());
         player.setDimensionX(getWidth());
@@ -530,6 +543,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                }
            }
            generator.generateFishes(getWidth(),currentFishes);
+           count++;
+           if(count%10==0) player.resetPointChange();
        }
     }
 
