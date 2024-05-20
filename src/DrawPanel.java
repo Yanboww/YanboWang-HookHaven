@@ -21,6 +21,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     private GameTimer gameTime;
     private String prevPage;
     private int count = 0;
+    private Leaderboard l;
     public DrawPanel() {
         currentPage = new Page("menu");
         this.addMouseListener(this);
@@ -31,6 +32,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         t = new Timer(100,this);
         currentFishes = new ArrayList<>();
         gameTime = new GameTimer();
+        l = new Leaderboard();
     }
 
     protected void paintComponent(Graphics g) {
@@ -59,6 +61,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
        else if(currentPage.getPageName().equals("Quit"))
        {
            player.saveGame();
+           l.setPoints(player.getMaxScore());
+           l.updateLeaderBoard();
            System.exit(0);
        }
        else if(currentPage.getPageName().equals("pause"))
@@ -68,6 +72,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
        else if(currentPage.getPageName().equals("index"))
        {
            paintIndex(g);
+       }
+       else if(currentPage.getPageName().equals("leaderboard"))
+       {
+           paintLeaderBoard(g);
        }
     }
 
@@ -98,6 +106,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         String time = timer[0] + ":" + timer[1] + timer[2];
         if(time.equals("0:00")) {
             player.saveGame();
+            l.setPoints(player.getMaxScore());
+            l.updateLeaderBoard();
             currentPage = new Page("game!");
             gameTime = new GameTimer();
             generator.endTimer();
@@ -195,7 +205,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.drawString("Hooks Dropped:" + player.getHookDropped(), getWidth()/4+getWidth()/30,getHeight()/4+getHeight()/16+2*getHeight()/12);
         g.drawString("Fish Caught:" + player.getFishCaught(), getWidth()/4+getWidth()/30,getHeight()/4+getHeight()/16+3*getHeight()/12);
         g.drawString("Accuracy:" + (int)((double)player.getFishCaught()/ player.getHookDropped()*100) + "%", getWidth()/4+getWidth()/30,getHeight()/4+getHeight()/16+4*getHeight()/12);
-        g.drawImage(readImage("Image/Floppy-Drive.png"),getWidth()/4+4*getWidth()/30,getHeight()/4+getHeight()/16+4*getHeight()/11,getWidth()/20,getHeight()/20,this);
+        g.drawImage(readImage("Image/People.png"),getWidth()/4+4*getWidth()/30,getHeight()/4+getHeight()/16+4*getHeight()/11,getWidth()/20,getHeight()/20,this);
         g.drawImage(readImage("Image/Redo.png"),getWidth()/4+7*getWidth()/30,getHeight()/4+getHeight()/16+4*getHeight()/11,getWidth()/15,getHeight()/15,this);
         g.drawImage(readImage("Image/Exit.png"),getWidth()/4+10*getWidth()/30,getHeight()/4+getHeight()/16+4*getHeight()/11,getWidth()/20,getHeight()/20,this);
         int buttonFactor = 4;
@@ -378,9 +388,12 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             incrementX+=getWidth()/3-getWidth()/50;
             countFish++;
         }
-
-
     }
+     public void paintLeaderBoard(Graphics g)
+     {
+        System.out.println(l.getLeaderboard());
+     }
+
     public void mousePressed(MouseEvent e) {
 
         Point clicked = e.getPoint();
@@ -433,7 +446,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                         }
                         else{
                             prevPage = "game!";
-                            currentPage = new Page("index");
+                            currentPage = new Page("leaderboard");
                         }
                     }
                 }
@@ -483,6 +496,9 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                         else if(currentButton.getName().equals("return"))
                         {
                             currentPage = new Page("game!");
+                            player.saveGame();
+                            l.setPoints(player.getMaxScore());
+                            l.updateLeaderBoard();
                         }
                         else {
                             prevPage = "pause";

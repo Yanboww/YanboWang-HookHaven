@@ -4,7 +4,22 @@ public class SortUtilities {
         String[] sortAid = new String[list.size()];
         sortProcess(list,sortAid,0,sortAid.length-1);
     }
+    public static void sortInt(ArrayList<Integer> list) {
+        int[] sortAid = new int[list.size()];
+        sortProcess(list,sortAid,0,sortAid.length-1);
+    }
     private static void sortProcess(ArrayList<String> list, String[] sortAid, int start, int end)
+    {
+        if(start<end)
+        {
+            int mid = (start+end)/2;
+            sortProcess(list,sortAid,start,mid);
+            sortProcess(list,sortAid,mid+1,end);
+            merge(list,sortAid,start,mid,end);
+        }
+    }
+
+    private static void sortProcess(ArrayList<Integer> list, int[] sortAid, int start, int end)
     {
         if(start<end)
         {
@@ -62,6 +77,45 @@ public class SortUtilities {
            int index = fish.indexOf(" ");
            if(index == -1) return;
            list.set(i,fish.substring(0, index));
+        }
+    }
+
+    private static void merge(ArrayList<Integer> list, int[] sortAid, int start, int mid, int end)
+    {
+        int s = start;
+        int m = mid+1;
+        int i = start;
+        while(s<= mid && m <= end )
+        {
+            if(list.get(s).compareTo(list.get(m))<=0)
+            {
+                sortAid[i] = list.get(m);
+                m++;
+            }
+            else{
+                sortAid[i] = list.get(s);
+                s++;
+            }
+            i++;
+        }
+
+        while(s<=mid)
+        {
+            sortAid[i] = list.get(s);
+            s++;
+            i++;
+        }
+
+        while(m <= end)
+        {
+            sortAid[i] = list.get(m);
+            m++;
+            i++;
+        }
+
+        for(int index = start; index <= end; index++)
+        {
+            list.set(index,sortAid[index]);
         }
     }
 
