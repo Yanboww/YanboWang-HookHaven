@@ -22,6 +22,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     private String prevPage;
     private int count = 0;
     private Leaderboard l;
+    private String name;
     public DrawPanel() {
         currentPage = new Page("menu");
         this.addMouseListener(this);
@@ -33,6 +34,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         currentFishes = new ArrayList<>();
         gameTime = new GameTimer();
         l = new Leaderboard();
+        l.setCurrentName(player.getName());
+        name = "";
     }
 
     protected void paintComponent(Graphics g) {
@@ -76,6 +79,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
        else if(currentPage.getPageName().equals("leaderboard"))
        {
            paintLeaderBoard(g);
+       }
+       else if(currentPage.getPageName().equals("newGame"))
+       {
+           paintNewGame(g);
        }
     }
 
@@ -415,6 +422,18 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
          }
      }
 
+     public void paintNewGame(Graphics g)
+     {
+         g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), this);
+         g.setColor(new Color(255,255,255));
+         g.fillRect(getWidth()/4,getHeight()/2,getWidth()/2,getHeight()/15);
+         g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
+         g.drawString("Name: ", getWidth()/10,getHeight()/2+getHeight()/20);
+         g.setColor(new Color(0,0,0));
+         g.drawString(name,getWidth()/3,getHeight()/2+getHeight()/20 );
+
+     }
+
     public void mousePressed(MouseEvent e) {
 
         Point clicked = e.getPoint();
@@ -494,11 +513,14 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                         if(currentButton.getName().equals("Clear"))
                         {
                             player.clearData();
+                            currentPage = new Page("newGame");
                         }
-                        currentPage = new Page("PlayGame");
-                        gameTime = new GameTimer();
-                        gameTime.startGame();
-                        generator.startTimer();
+                        else{
+                            currentPage = new Page("PlayGame");
+                            gameTime = new GameTimer();
+                            gameTime.startGame();
+                            generator.startTimer();
+                        }
                     }
                 }
             }
@@ -556,6 +578,15 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             else if (e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT)
             {
                 player.moveRight();
+            }
+        }
+        else if(currentPage.getPageName().equals("newGame"))
+        {
+            String dict = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            String value = e.getKeyText(e.getKeyCode());
+            if(dict.contains(value))
+            {
+                name+= value;
             }
         }
     }

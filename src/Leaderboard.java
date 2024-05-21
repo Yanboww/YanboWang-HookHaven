@@ -15,7 +15,7 @@ public class Leaderboard{
     {
         leaderboard = new ArrayList<>();
         pointLeaderboard = new ArrayList<>();
-        currentName = "yanbo";
+        currentName = "someone";
         retrieveLeaderBoard();
     }
 

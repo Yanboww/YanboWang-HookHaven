@@ -33,9 +33,11 @@ public class Character implements ActionListener {
     private int hookDropped;
     private int fishCaught;
     private int pointChange;
+    private String name;
 
     public Character(int y)
     {
+        name = "";
         score = 0;
         caughtFishTypes = new ArrayList<>();
         screenHeight = 500;
@@ -54,6 +56,16 @@ public class Character implements ActionListener {
         hookDropped = 0;
         fishCaught = 0;
         pointChange = 0;
+    }
+
+    public void setName(String n)
+    {
+        name = n;
+    }
+
+    public String getName()
+    {
+        return name;
     }
 
     public void startAnimTimer()
@@ -148,6 +160,7 @@ public class Character implements ActionListener {
         try{
             f = new File("Data/save_file");
             fw = new FileWriter(f);
+            fw.write(name + "\n");
             fw.write(Integer.toString(maxScore));
             if(!caughtFishTypes.isEmpty())
             {
@@ -175,8 +188,14 @@ public class Character implements ActionListener {
             int number =0;
             while(s.hasNextLine())
             {
-                if(start == 0){
+                if(start == 1){
                     number = Integer.parseInt(s.nextLine());
+                    start++;
+                    continue;
+                }
+                else if (start == 0)
+                {
+                    name = s.nextLine();
                     start++;
                     continue;
                 }
