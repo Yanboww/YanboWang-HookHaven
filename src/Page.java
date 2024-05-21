@@ -48,6 +48,10 @@ public class Page {
         {
             pageButtons.add(new Button("return",200,500));
         }
+        else if(pageName.equals("leaderboard"))
+        {
+            pageButtons.add(new Button("return",200,500));
+        }
         return pageButtons;
     }
 

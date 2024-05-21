@@ -391,7 +391,28 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     }
      public void paintLeaderBoard(Graphics g)
      {
-        System.out.println(l.getLeaderboard());
+
+         g.drawImage(currentPage.getCurrentBackground().getImage(), 0, 0, getWidth(), getHeight(), this);
+         g.drawImage(readImage("Image/Left-Arrow.png"),getWidth()/20,getHeight()/10,getWidth()/16,getHeight()/14,this);
+         currentPage.getCurrentButtons().get(0).setRec(getWidth()/20,getHeight()/10,getWidth()/16,getHeight()/14);
+         g.setColor(new Color(255,255,255));
+         g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/10));
+         g.drawString("Leaderboard", getWidth()/4-getWidth()/16,getHeight()/11);
+         g.fillRect(getWidth()/4,getHeight()/10,getWidth()/2,getHeight()/2 + getHeight()/3);
+         g.setColor(new Color(100,180,255));
+         g.fillRect(getWidth()/4+getWidth()/30,getHeight()/10+getHeight()/30,getWidth()/2-getWidth()/15,getHeight()/2 + getHeight()/3-getHeight()/15);
+         ArrayList<String> leaderboard = l.getLeaderboard();
+         g.setColor(new Color(255,255,255));
+         g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/40));
+         int incrementY = getHeight()/5;
+         g.drawString("1.    " + leaderboard.get(0), getWidth()/3,incrementY);
+         g.drawImage(readImage("Image/Crown.png"),getWidth()/3+getWidth()/30,incrementY-getHeight()/22,getWidth()/20,getHeight()/15,this);
+         incrementY+= getHeight()/15;
+         for(int i = 1; i < leaderboard.size(); i++)
+         {
+            g.drawString(i+1 + ". " + leaderboard.get(i), getWidth()/3,incrementY);
+            incrementY += getHeight()/15;
+         }
      }
 
     public void mousePressed(MouseEvent e) {
@@ -507,7 +528,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                     }
                 }
             }
-            else if(currentPage.getPageName().equals("index"))
+            else if(currentPage.getPageName().equals("index") || currentPage.getPageName().equals("leaderboard"))
             {
                 for(Button currentButton : currentPage.getCurrentButtons())
                 {

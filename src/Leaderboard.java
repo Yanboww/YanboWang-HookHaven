@@ -15,7 +15,7 @@ public class Leaderboard{
     {
         leaderboard = new ArrayList<>();
         pointLeaderboard = new ArrayList<>();
-        currentName = "joe";
+        currentName = "yanbo";
         retrieveLeaderBoard();
     }
 
@@ -38,8 +38,8 @@ public class Leaderboard{
             while(s.hasNextLine() && leaderboard.size() < 10)
             {
                 String line = s.nextLine();
-                leaderboard.add(line);
-                pointLeaderboard.add(line.lastIndexOf(" "));
+                leaderboard.add(line.substring(0,line.indexOf(" ")));
+                pointLeaderboard.add(Integer.parseInt(line.substring(line.lastIndexOf(" ")+1)));
             }
         }
         catch (FileNotFoundException e)
@@ -58,8 +58,8 @@ public class Leaderboard{
             int count = 0;
            for(String rank : leaderboard)
            {
-               if(count == leaderboard.size()-1) fw.write(rank);
-               else fw.write(rank+"\n");
+               if(count == leaderboard.size()-1) fw.write(rank + " -- " +pointLeaderboard.get(count));
+               else fw.write(rank + " -- " + pointLeaderboard.get(count) +"\n");
                count++;
            }
             fw.close();
@@ -79,8 +79,8 @@ public class Leaderboard{
         pointLeaderboard.add(points);
         sortPoints();
         int index = pointLeaderboard.lastIndexOf(points);
-        leaderboard.add(index,currentName + "--" + points);
-        if(leaderboard.size()>1){
+        leaderboard.add(index,currentName);
+        if(leaderboard.indexOf(currentName) != leaderboard.lastIndexOf(currentName)){
             for(int i = leaderboard.size()-1;i>=0;i--)
             {
                 if(leaderboard.get(i).contains(currentName))
@@ -96,7 +96,16 @@ public class Leaderboard{
 
     public ArrayList<String> getLeaderboard()
     {
-        return leaderboard;
+        ArrayList<String> returnLeader = new ArrayList<>();
+        for(int i = 0; i < 10; i++)
+        {
+            if(i < leaderboard.size())
+            {
+                returnLeader.add(leaderboard.get(i) + " - " + pointLeaderboard.get(i));
+            }
+            else break;
+        }
+        return returnLeader;
     }
 
 
