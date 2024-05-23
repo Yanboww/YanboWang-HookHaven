@@ -108,5 +108,15 @@ public class Leaderboard{
         return returnLeader;
     }
 
+    public boolean checkNameAvailability(String n)
+    {
+        n = n.toUpperCase();
+        for(String players : leaderboard)
+        {
+            if(players.toUpperCase().equals(n)) return false;
+        }
+        return true;
+    }
+
 
 }

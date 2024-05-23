@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Font;
 import java.awt.Color;
+import java.util.Locale;
 import javax.swing.Timer;
 
 class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListener{
@@ -23,6 +24,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     private int count = 0;
     private Leaderboard l;
     private String name;
+    private boolean shifted;
+    private String warning;
     public DrawPanel() {
         currentPage = new Page("menu");
         this.addMouseListener(this);
@@ -36,6 +39,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         l = new Leaderboard();
         l.setCurrentName(player.getName());
         name = "";
+        shifted = false;
+        warning = "";
     }
 
     protected void paintComponent(Graphics g) {
@@ -46,7 +51,12 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
        }
        else if(currentPage.getPageName().equals("Play"))
        {
-           paintGameOption(g);
+           if(l.getLeaderboard().size()== 0) {
+               currentPage = new Page("newGame");
+               name = "";
+               warning = "";
+           }
+           else paintGameOption(g);
        }
        else if (currentPage.getPageName().equals("PlayGame"))
        {
@@ -428,9 +438,14 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
          g.setColor(new Color(255,255,255));
          g.fillRect(getWidth()/4,getHeight()/2,getWidth()/2,getHeight()/15);
          g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
-         g.drawString("Name: ", getWidth()/10,getHeight()/2+getHeight()/20);
+         g.drawString("Name: ", getWidth()/10,getHeight()/2+getHeight()/18);
          g.setColor(new Color(0,0,0));
-         g.drawString(name,getWidth()/3,getHeight()/2+getHeight()/20 );
+         g.drawString(name,getWidth()/3,getHeight()/2+getHeight()/18 );
+         if(warning.length()>0)
+         {
+             g.setColor(new Color(255, 255, 255));
+             g.drawString(warning,0,getHeight()/2+getHeight()/6);
+         }
 
      }
 
@@ -475,13 +490,14 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                 {
                     if(currentButtons.getButton().contains(clicked))
                     {
-                        player.clearStat();
                         if(currentButtons.getName().equals("exit"))
                         {
+                            player.clearStat();
                             currentPage = new Page("menu");
                         }
                         else if(currentButtons.getName().equals("replay"))
                         {
+                            player.clearStat();
                             currentPage = new Page("Play");
                         }
                         else{
@@ -513,6 +529,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                         if(currentButton.getName().equals("Clear"))
                         {
                             player.clearData();
+                            name = "";
+                            warning = "";
                             currentPage = new Page("newGame");
                         }
                         else{
@@ -584,9 +602,37 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         {
             String dict = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             String value = e.getKeyText(e.getKeyCode());
-            if(dict.contains(value))
+            if(name.length()>=5 && dict.contains(value))
             {
+                warning = "Names can't exceed 5 characters!";
+            }
+            else if(dict.contains(value))
+            {
+                if(shifted){
+                    value = value.toUpperCase();
+                    shifted = false;
+                }
+                else value = value.toLowerCase();
                 name+= value;
+            }
+            else if(value.equals("Shift")) shifted = true;
+            else if(value.equals("Backspace") && name.length()>0) name = name.substring(0,name.length()-1);
+            else if(value.equals("Enter"))
+            {
+                boolean isNameAvailable = l.checkNameAvailability(name);
+                if(isNameAvailable)
+                {
+                    l.setCurrentName(name);
+                    player.setName(name);
+                    currentPage = new Page("PlayGame");
+                    gameTime = new GameTimer();
+                    gameTime.startGame();
+                    generator.startTimer();
+                }
+                else{
+                    name = "";
+                    warning = "The name is already taken!";
+                }
             }
         }
     }

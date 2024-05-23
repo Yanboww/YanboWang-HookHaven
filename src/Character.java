@@ -119,7 +119,7 @@ public class Character implements ActionListener {
     {
         int pointChange = f.getPointGain();
         score += pointChange;
-        if(score < 0){
+        if(score <= 0){
             pointChange = (score - pointChange)*-1;
             score = 0;
         }
