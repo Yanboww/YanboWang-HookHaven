@@ -34,6 +34,7 @@ public class Character implements ActionListener {
     private int fishCaught;
     private int pointChange;
     private String name;
+    private int tempMaxScore;
 
     public Character(int y)
     {
@@ -56,6 +57,7 @@ public class Character implements ActionListener {
         hookDropped = 0;
         fishCaught = 0;
         pointChange = 0;
+        tempMaxScore = maxScore;
     }
 
     public void setName(String n)
@@ -123,13 +125,22 @@ public class Character implements ActionListener {
             pointChange = (score - pointChange)*-1;
             score = 0;
         }
-        maxScore = Math.max(score,maxScore);
+        tempMaxScore = Math.max(score,tempMaxScore);
+        if(tempMaxScore>maxScore && pointChange<0)
+        {
+            tempMaxScore+=pointChange;
+        }
         String name = f.getName();
         if(!caughtFishTypes.contains(name))
         {
             caughtFishTypes.add(name);
         }
         return pointChange;
+    }
+
+    public void saveMaxScore()
+    {
+        maxScore = Math.max(tempMaxScore,maxScore);
     }
     public int getPointChange()
     {
@@ -148,6 +159,7 @@ public class Character implements ActionListener {
     public int getMaxScore() {
         return maxScore;
     }
+    public int getTempMaxScore(){return tempMaxScore;}
 
     public ArrayList<String> getCaughtFishTypes() {
         return caughtFishTypes;

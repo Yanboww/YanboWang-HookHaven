@@ -125,6 +125,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             player.saveGame();
             l.setPoints(player.getMaxScore());
             l.updateLeaderBoard();
+            player.saveMaxScore();
             currentPage = new Page("game!");
             gameTime = new GameTimer();
             generator.endTimer();
@@ -141,7 +142,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.setColor(new Color(255,255,255));
         g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
         g.drawString("Time Remaining - " + time,10,getHeight()/10);
-        g.drawString("High Score:  " + player.getMaxScore(),10,getHeight()/10+getHeight()/10);
+        g.drawString("High Score:  " + player.getTempMaxScore(),10,getHeight()/10+getHeight()/10);
         g.drawString("Score:  " + player.getScore(),10,getHeight()/10+2*getHeight()/10);
         g.drawImage(readImage("Image/List.png"),getWidth()-getWidth()/10,getHeight()/10,getWidth()/15,getHeight()/15,this);
         currentPage.getCurrentButtons().get(0).setRec(getWidth()-getWidth()/10,getHeight()/10,getWidth()/15,getHeight()/15);
@@ -556,6 +557,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                         }
                         else if(currentButton.getName().equals("return"))
                         {
+                            player.saveMaxScore();
                             currentPage = new Page("game!");
                             player.saveGame();
                             l.setPoints(player.getMaxScore());
