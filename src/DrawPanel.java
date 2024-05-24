@@ -121,12 +121,12 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     {
         int[] timer = gameTime.getTimeRemaining();
         String time = timer[0] + ":" + timer[1] + timer[2];
-        if(time.equals("0:00")) {
+        if(time.equals("0:50")) {
+            player.saveMaxScore();
+            currentPage = new Page("game!");
             player.saveGame();
             l.setPoints(player.getMaxScore());
             l.updateLeaderBoard();
-            player.saveMaxScore();
-            currentPage = new Page("game!");
             gameTime = new GameTimer();
             generator.endTimer();
             currentFishes.clear();
@@ -623,7 +623,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             else if(value.equals("Enter"))
             {
                 boolean isNameAvailable = l.checkNameAvailability(name);
-                if(isNameAvailable)
+                if(isNameAvailable && name.length()>0)
                 {
                     l.setCurrentName(name);
                     player.setName(name);
@@ -632,6 +632,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                     gameTime.startGame();
                     generator.startTimer();
                 }
+                else if(name.length()==0) warning = "Name can't be empty!";
                 else{
                     name = "";
                     warning = "The name is already taken!";
