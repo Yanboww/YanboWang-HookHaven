@@ -142,6 +142,11 @@ public class Character implements ActionListener {
     {
         maxScore = Math.max(tempMaxScore,maxScore);
     }
+    public void resetMaxScore()
+    {
+        maxScore = 0;
+        tempMaxScore = 0;
+    }
     public int getPointChange()
     {
         return pointChange;

@@ -529,6 +529,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                     {
                         if(currentButton.getName().equals("Clear"))
                         {
+                            player.resetMaxScore();
                             player.clearData();
                             name = "";
                             warning = "";
