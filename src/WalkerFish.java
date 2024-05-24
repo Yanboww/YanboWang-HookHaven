@@ -13,6 +13,7 @@ public class WalkerFish extends Fish implements ActionListener {
 
     private int animationValue;
     private Timer t;
+    private int increment;
 
     public WalkerFish()
     {
@@ -22,6 +23,7 @@ public class WalkerFish extends Fish implements ActionListener {
         returnedImage = super.getImage();
         t = new Timer(200, this);
         animationValue = 1;
+        increment = 1;
         t.start();
     }
 
@@ -29,18 +31,20 @@ public class WalkerFish extends Fish implements ActionListener {
     {
         if(animationValue == 1)
         {
-            animationValue ++;
+            increment = 1;
+            animationValue += increment;
             returnedImage = super.getImage();
         }
         else if (animationValue == 2)
         {
-            animationValue ++;
+            animationValue += increment;
             returnedImage = image2;
 
         }
         else if(animationValue == 3)
         {
-            animationValue --;
+            increment = -1;
+            animationValue +=increment;
             returnedImage = image3;
         }
     }
