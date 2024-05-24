@@ -13,8 +13,7 @@ public class ItemGenerate implements ActionListener{
     public ItemGenerate(){
         availableFishes = new ArrayList<>();
         pointValue = new HashMap<>();
-        //t = new Timer(15000,this);
-        t = new Timer(100,this);
+        t = new Timer(15000,this);
         generateAvailableFishes();
     }
 
