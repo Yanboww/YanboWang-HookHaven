@@ -26,6 +26,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     private String name;
     private boolean shifted;
     private String warning;
+    private SoundUtilities effects;
     public DrawPanel() {
         currentPage = new Page("menu");
         this.addMouseListener(this);
@@ -41,9 +42,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         name = "";
         shifted = false;
         warning = "";
+        effects = new SoundUtilities();
     }
 
     protected void paintComponent(Graphics g) {
+        //currentPage.startBgm();
         super.paintComponent(g);
        if(currentPage.getPageName().equals("menu"))
        {
@@ -461,6 +464,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                     Rectangle hitBox = currentButtons.getButton();
                     if(hitBox.contains(clicked))
                     {
+                        effects.playSoundEffect("click.wav");
                         currentPage = new Page(currentButtons.getName());
                     }
                 }
@@ -473,6 +477,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                     Rectangle hitBox = currentButtons.getButton();
                     if(hitBox.contains(clicked))
                     {
+                        effects.playSoundEffect("click.wav");
                         pressed = true;
                         if(currentButtons.getName().equals("pause")){
                             currentPage = new Page("pause");
@@ -491,6 +496,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                 {
                     if(currentButtons.getButton().contains(clicked))
                     {
+                        effects.playSoundEffect("click.wav");
                         if(currentButtons.getName().equals("exit"))
                         {
                             player.clearStat();
@@ -512,6 +518,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             {
                 for(Button currentButtons : currentPage.getCurrentButtons())
                 {
+                    effects.playSoundEffect("click.wav");
                     if(currentButtons.getButton().contains(clicked))
                     {
                         if(currentButtons.getName().equals("exit"))
@@ -527,6 +534,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                 {
                     if(currentButton.getButton().contains(clicked))
                     {
+                        effects.playSoundEffect("click.wav");
                         if(currentButton.getName().equals("Clear"))
                         {
                             player.resetMaxScore();
@@ -550,6 +558,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                 {
                     if(currentButton.getButton().contains(clicked))
                     {
+                        effects.playSoundEffect("click.wav");
                         if(currentButton.getName().equals("continue"))
                         {
                             currentPage = new Page("PlayGame");
@@ -577,6 +586,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                 {
                     if(currentButton.getButton().contains(clicked))
                     {
+                        effects.playSoundEffect("click.wav");
                         if(currentButton.getName().equals("return"))
                         {
                             currentPage = new Page(prevPage);
@@ -662,7 +672,12 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
            }
            generator.generateFishes(getWidth(),currentFishes);
            count++;
-           if(count%10==0) player.resetPointChange();
+           if(count%10==0)
+           {
+               if(player.getPointChange()>0) effects.playSoundEffect("pointGained.wav");
+               else if(player.getPointChange()<0) effects.playSoundEffect("bombEffect.wav");
+               player.resetPointChange();
+           }
        }
     }
 

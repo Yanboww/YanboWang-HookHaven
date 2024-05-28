@@ -3,12 +3,15 @@ public class Page {
     private Background currentBackground;
     private ArrayList<Button> currentButtons;
     private String pageName;
-
+    private String bgmName;
+    private SoundUtilities bgm;
     public Page(String name)
     {
         pageName = name;
         currentBackground = new Background(pageName);
         currentButtons = getButtons();
+        bgmName = name + ".wav";
+        bgm = new SoundUtilities();
     }
     public ArrayList<Button> getButtons()
     {
@@ -65,5 +68,15 @@ public class Page {
 
     public String getPageName() {
         return pageName;
+    }
+
+    public String getBgmName(){return bgmName;}
+    public void startBgm()
+    {
+        bgm.playSound(bgmName);
+    }
+    public void stopBgm()
+    {
+        bgm.stopSound();
     }
 }
