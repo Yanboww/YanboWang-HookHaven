@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import javax.sound.sampled.*;
 
 public class SoundUtilities {
@@ -29,11 +30,31 @@ public class SoundUtilities {
                clip.loop(Clip.LOOP_CONTINUOUSLY);
                soundPlaying = true;
            }
+           catch(FileNotFoundException e)
+           {
+              try{
+                  File f = new File("AudioFile/pause.wav");
+                  AudioInputStream audioIn = AudioSystem.getAudioInputStream(f);
+                  clip.open(audioIn);
+                  clip.start();
+                  clip.loop(Clip.LOOP_CONTINUOUSLY);
+                  soundPlaying = true;
+              }
+              catch(Exception error2)
+              {
+                 if(!soundPlaying)
+                 {
+                     System.out.println("something is seriously wrong with the sound here");
+                 }
+              }
+           }
            catch (Exception e)
            {
                if(!soundPlaying)
                {
-                   System.out.println("sound error");
+                   clip.start();
+                   clip.loop(Clip.LOOP_CONTINUOUSLY);
+                   soundPlaying = true;
                }
            }
        }
@@ -57,6 +78,7 @@ public class SoundUtilities {
 
     public void stopSound()
     {
+        clip.loop(-1);
         clip.stop();
         soundPlaying = false;
     }

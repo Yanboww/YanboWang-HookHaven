@@ -46,15 +46,15 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     }
 
     protected void paintComponent(Graphics g) {
-        //currentPage.startBgm();
         super.paintComponent(g);
+        currentPage.startBgm();
        if(currentPage.getPageName().equals("menu"))
        {
           paintMenu(g);
        }
        else if(currentPage.getPageName().equals("Play"))
        {
-           if(l.getLeaderboard().size()== 0) {
+           if(l.getLeaderboard().size() <= 1 || player.getCaughtFishTypes().size()==0) {
                currentPage = new Page("newGame");
                name = "";
                warning = "";
@@ -118,6 +118,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             g.drawString(currentButtons.getName(),getWidth()/4+pageWidth/6,yOfRect+getHeight()/13);
             yOfRect += getHeight()/6;
         }
+        String speakerType = "Image/Speaker.png";
+        if(currentPage.isMuted()) speakerType = "Image/Speaker-Crossed.png";
+        g.drawImage(readImage(speakerType),getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14,this);
+        currentPage.getCurrentButtons().get(currentPage.getCurrentButtons().size()-1).setRec(getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14);
     }
 
     public void paintGame(Graphics g)
@@ -211,6 +215,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             //see fish hit boxes
             //g.drawRect(swim.getX(),swim.getY(),getWidth()/swim.getWidth(),getHeight()/swim.getHeight());
         }
+        String speakerType = "Image/Speaker.png";
+        if(currentPage.isMuted()) speakerType = "Image/Speaker-Crossed.png";
+        g.drawImage(readImage(speakerType),getWidth()-getWidth()/5,getHeight()/10,getWidth()/16,getHeight()/14,this);
+        currentPage.getCurrentButtons().get(currentPage.getCurrentButtons().size()-1).setRec(getWidth()-getWidth()/5,getHeight()/10,getWidth()/16,getHeight()/14);
     }
     public void paintFinish(Graphics g)
     {
@@ -235,6 +243,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             currentButtons.setRec(getWidth()/4+buttonFactor*getWidth()/30,getHeight()/4+getHeight()/16+4*getHeight()/11,getWidth()/22,getHeight()/15);
             buttonFactor +=3;
         }
+        String speakerType = "Image/Speaker.png";
+        if(currentPage.isMuted()) speakerType = "Image/Speaker-Crossed.png";
+        g.drawImage(readImage(speakerType),getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14,this);
+        currentPage.getCurrentButtons().get(currentPage.getCurrentButtons().size()-1).setRec(getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14);
     }
     public void paintHelp(Graphics g)
     {
@@ -253,7 +265,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.drawString("Move fisherman left",getWidth()/9+getWidth()/30,getHeight()/4+8*getHeight()/18);
         g.drawImage(readImage("Image/dKey.png"),getHeight()/26*-1,getHeight()/4+9*getHeight()/16,getWidth()/5,getHeight()/6,this);
         g.drawString("Move fisherman right",getWidth()/9+getWidth()/30,getHeight()/4+12*getHeight()/18);
-
+        String speakerType = "Image/Speaker.png";
+        if(currentPage.isMuted()) speakerType = "Image/Speaker-Crossed.png";
+        g.drawImage(readImage(speakerType),getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14,this);
+        currentPage.getCurrentButtons().get(currentPage.getCurrentButtons().size()-1).setRec(getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14);
     }
 
     public void paintGameOption(Graphics g)
@@ -272,7 +287,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.setFont(new Font("Monospaced", Font.BOLD, getWidth()/20));
         g.drawString("New Game",getWidth()/10 + getWidth()/7,getHeight()/4+getHeight()/4);
         g.drawString("Load Game",4*getWidth()/10 + getWidth()/8,getHeight()/4+getHeight()/4);
-
+        String speakerType = "Image/Speaker.png";
+        if(currentPage.isMuted()) speakerType = "Image/Speaker-Crossed.png";
+        g.drawImage(readImage(speakerType),getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14,this);
+        currentPage.getCurrentButtons().get(currentPage.getCurrentButtons().size()-1).setRec(getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14);
     }
     public void paintPause(Graphics g)
     {
@@ -359,7 +377,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         g.drawString("Unpause", getWidth()/4+getWidth()/30+getWidth()/7+ getWidth()/100,getHeight()/4+getHeight()/9+getHeight()/120);
         g.drawString("Check Index", getWidth()/4+getWidth()/30+getWidth()/9-getWidth()/40,getHeight()/4+2*getHeight()/9+getHeight()/26);
         g.drawString("Save & Exit", getWidth()/4+getWidth()/30+getWidth()/9-getWidth()/40,getHeight()/4+3*getHeight()/9+getHeight()/12);
-
+        String speakerType = "Image/Speaker.png";
+        if(currentPage.isMuted()) speakerType = "Image/Speaker-Crossed.png";
+        g.drawImage(readImage(speakerType),getWidth()-getWidth()/5,getHeight()/10,getWidth()/16,getHeight()/14,this);
+        currentPage.getCurrentButtons().get(currentPage.getCurrentButtons().size()-1).setRec(getWidth()-getWidth()/5,getHeight()/10,getWidth()/16,getHeight()/14);
     }
     public void paintIndex(Graphics g)
     {
@@ -409,6 +430,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             incrementX+=getWidth()/3-getWidth()/50;
             countFish++;
         }
+        String speakerType = "Image/Speaker.png";
+        if(currentPage.isMuted()) speakerType = "Image/Speaker-Crossed.png";
+        g.drawImage(readImage(speakerType),getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14,this);
+        currentPage.getCurrentButtons().get(currentPage.getCurrentButtons().size()-1).setRec(getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14);
     }
      public void paintLeaderBoard(Graphics g)
      {
@@ -434,6 +459,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             g.drawString(i+1 + ". " + leaderboard.get(i), getWidth()/3,incrementY);
             incrementY += getHeight()/15;
          }
+         String speakerType = "Image/Speaker.png";
+         if(currentPage.isMuted()) speakerType = "Image/Speaker-Crossed.png";
+         g.drawImage(readImage(speakerType),getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14,this);
+         currentPage.getCurrentButtons().get(currentPage.getCurrentButtons().size()-1).setRec(getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14);
      }
 
      public void paintNewGame(Graphics g)
@@ -450,6 +479,12 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
              g.setColor(new Color(255, 255, 255));
              g.drawString(warning,0,getHeight()/2+getHeight()/6);
          }
+         g.drawImage(readImage("Image/Left-Arrow.png"),getWidth()/20,getHeight()/10,getWidth()/16,getHeight()/14,this);
+         currentPage.getCurrentButtons().get(0).setRec(getWidth()/20,getHeight()/10,getWidth()/16,getHeight()/14);
+         String speakerType = "Image/Speaker.png";
+         if(currentPage.isMuted()) speakerType = "Image/Speaker-Crossed.png";
+         g.drawImage(readImage(speakerType),getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14,this);
+         currentPage.getCurrentButtons().get(currentPage.getCurrentButtons().size()-1).setRec(getWidth()-getWidth()/10,getHeight()/10,getWidth()/16,getHeight()/14);
 
      }
 
@@ -465,7 +500,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                     if(hitBox.contains(clicked))
                     {
                         effects.playSoundEffect("click.wav");
-                        currentPage = new Page(currentButtons.getName());
+                        if(currentButtons.getName().equals("muted")) currentPage.setMuted();
+                        else{
+                            currentPage.stopBgm();
+                            currentPage = new Page(currentButtons.getName());
+                        }
                     }
                 }
             }
@@ -480,9 +519,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                         effects.playSoundEffect("click.wav");
                         pressed = true;
                         if(currentButtons.getName().equals("pause")){
+                            currentPage.stopBgm();
                             currentPage = new Page("pause");
                             gameTime.pauseGame();
                         }
+                        else if(currentButtons.getName().equals("muted")) currentPage.setMuted();
                     }
                 }
                if(!pressed){
@@ -499,15 +540,19 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                         effects.playSoundEffect("click.wav");
                         if(currentButtons.getName().equals("exit"))
                         {
+                            currentPage.stopBgm();
                             player.clearStat();
                             currentPage = new Page("menu");
                         }
                         else if(currentButtons.getName().equals("replay"))
                         {
+                            currentPage.stopBgm();
                             player.clearStat();
                             currentPage = new Page("Play");
                         }
+                        else if(currentButtons.getName().equals("muted")) currentPage.setMuted();
                         else{
+                            currentPage.stopBgm();
                             prevPage = "game!";
                             currentPage = new Page("leaderboard");
                         }
@@ -518,13 +563,15 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             {
                 for(Button currentButtons : currentPage.getCurrentButtons())
                 {
-                    effects.playSoundEffect("click.wav");
                     if(currentButtons.getButton().contains(clicked))
                     {
+                        effects.playSoundEffect("click.wav");
                         if(currentButtons.getName().equals("exit"))
                         {
+                            currentPage.stopBgm();
                             currentPage = new Page("menu");
                         }
+                        else if(currentButtons.getName().equals("muted")) currentPage.setMuted();
                     }
                 }
             }
@@ -537,13 +584,16 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                         effects.playSoundEffect("click.wav");
                         if(currentButton.getName().equals("Clear"))
                         {
+                            currentPage.stopBgm();
                             player.resetMaxScore();
                             player.clearData();
                             name = "";
                             warning = "";
                             currentPage = new Page("newGame");
                         }
+                        else if(currentButton.getName().equals("muted")) currentPage.setMuted();
                         else{
+                            currentPage.stopBgm();
                             currentPage = new Page("PlayGame");
                             gameTime = new GameTimer();
                             gameTime.startGame();
@@ -558,6 +608,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                 {
                     if(currentButton.getButton().contains(clicked))
                     {
+                        currentPage.stopBgm();
                         effects.playSoundEffect("click.wav");
                         if(currentButton.getName().equals("continue"))
                         {
@@ -573,6 +624,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                             l.setPoints(player.getMaxScore());
                             l.updateLeaderBoard();
                         }
+                        else if(currentButton.getName().equals("muted")) currentPage.setMuted();
                         else {
                             prevPage = "pause";
                             currentPage = new Page("index");
@@ -580,17 +632,20 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                     }
                 }
             }
-            else if(currentPage.getPageName().equals("index") || currentPage.getPageName().equals("leaderboard"))
+            else if(currentPage.getPageName().equals("index") || currentPage.getPageName().equals("leaderboard") || currentPage.getPageName().equals("newGame"))
             {
                 for(Button currentButton : currentPage.getCurrentButtons())
                 {
                     if(currentButton.getButton().contains(clicked))
                     {
+                        currentPage.stopBgm();
                         effects.playSoundEffect("click.wav");
                         if(currentButton.getName().equals("return"))
                         {
-                            currentPage = new Page(prevPage);
+                            if(currentPage.getPageName().equals("newGame")) currentPage = new Page("menu");
+                            else currentPage = new Page(prevPage);
                         }
+                        else if(currentButton.getName().equals("muted")) currentPage.setMuted();
                     }
                 }
             }
@@ -617,6 +672,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
             String value = e.getKeyText(e.getKeyCode());
             if(name.length()>=5 && dict.contains(value))
             {
+                effects.playSoundEffect("error.wav");
                 warning = "Names can't exceed 5 characters!";
             }
             else if(dict.contains(value))
@@ -627,6 +683,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                 }
                 else value = value.toLowerCase();
                 name+= value;
+                effects.playSoundEffect("keyPress.wav");
             }
             else if(value.equals("Shift")) shifted = true;
             else if(value.equals("Backspace") && name.length()>0) name = name.substring(0,name.length()-1);
@@ -642,10 +699,14 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                     gameTime.startGame();
                     generator.startTimer();
                 }
-                else if(name.length()==0) warning = "Name can't be empty!";
+                else if(name.length()==0) {
+                    effects.playSoundEffect("error.wav");
+                    warning = "Name can't be empty!";
+                }
                 else{
                     name = "";
                     warning = "The name is already taken!";
+                    effects.playSoundEffect("error.wav");
                 }
             }
         }

@@ -5,13 +5,23 @@ public class Page {
     private String pageName;
     private String bgmName;
     private SoundUtilities bgm;
+    private boolean muted;
+    private boolean mutedBefore;
     public Page(String name)
     {
         pageName = name;
         currentBackground = new Background(pageName);
         currentButtons = getButtons();
         bgmName = name + ".wav";
+        if(name.equals("PlayGame"))
+        {
+            int random = (int)(Math.random()*3)+1;
+            if(random == 2) bgmName = name+"2.wav";
+            else if (random == 3) bgmName = name+"3.wav";
+        }
         bgm = new SoundUtilities();
+        muted = false;
+        mutedBefore = false;
     }
     public ArrayList<Button> getButtons()
     {
@@ -55,6 +65,11 @@ public class Page {
         {
             pageButtons.add(new Button("return",200,500));
         }
+        else if(pageName.equals("newGame"))
+        {
+            pageButtons.add(new Button("return",200,500));
+        }
+        pageButtons.add(new Button("muted",200,500));
         return pageButtons;
     }
 
@@ -73,10 +88,21 @@ public class Page {
     public String getBgmName(){return bgmName;}
     public void startBgm()
     {
-        bgm.playSound(bgmName);
+        if(muted && !mutedBefore)
+        {
+            stopBgm();
+            mutedBefore = true;
+        }
+        else if(!muted) bgm.playSound(bgmName);
+
     }
     public void stopBgm()
     {
         bgm.stopSound();
+    }
+    public boolean isMuted(){return muted;}
+    public void setMuted(){
+        muted = !muted;
+        mutedBefore = false;
     }
 }
