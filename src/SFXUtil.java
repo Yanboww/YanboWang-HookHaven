@@ -31,7 +31,6 @@ public class SFXUtil implements ActionListener {
     }
 
     public BufferedImage getImage() {
-        System.out.println("go");
         return returnedImage;
     }
     public void actionPerformed(ActionEvent e)

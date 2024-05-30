@@ -130,7 +130,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     {
         int[] timer = gameTime.getTimeRemaining();
         String time = timer[0] + ":" + timer[1] + timer[2];
-        if(time.equals("0:50")) {
+        if(time.equals("0:00")) {
             currentPage.stopBgm();
             player.saveMaxScore();
             currentPage = new Page("game!");
