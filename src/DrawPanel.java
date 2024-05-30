@@ -705,6 +705,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
                 boolean isNameAvailable = l.checkNameAvailability(name);
                 if(isNameAvailable && name.length()>0)
                 {
+                    currentPage.stopBgm();
                     l.setCurrentName(name);
                     player.setName(name);
                     currentPage = new Page("PlayGame");
