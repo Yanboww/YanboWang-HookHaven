@@ -5,8 +5,8 @@ public class Page {
     private String pageName;
     private String bgmName;
     private SoundUtilities bgm;
-    private boolean muted;
-    private boolean mutedBefore;
+    private static boolean muted;
+    private static boolean mutedBefore;
     public Page(String name)
     {
         pageName = name;
@@ -20,8 +20,6 @@ public class Page {
             else if (random == 3) bgmName = name+"3.wav";
         }
         bgm = new SoundUtilities();
-        muted = false;
-        mutedBefore = false;
     }
     public ArrayList<Button> getButtons()
     {
