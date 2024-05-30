@@ -27,6 +27,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     private boolean shifted;
     private String warning;
     private SoundUtilities effects;
+    private SFXUtil specialEffects;
     public DrawPanel() {
         currentPage = new Page("menu");
         this.addMouseListener(this);
@@ -55,6 +56,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
        else if(currentPage.getPageName().equals("Play"))
        {
            if(l.getLeaderboard().size() <= 1 || player.getCaughtFishTypes().size()==0) {
+               currentPage.stopBgm();
                currentPage = new Page("newGame");
                name = "";
                warning = "";
@@ -128,7 +130,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
     {
         int[] timer = gameTime.getTimeRemaining();
         String time = timer[0] + ":" + timer[1] + timer[2];
-        if(time.equals("0:00")) {
+        if(time.equals("0:50")) {
+            currentPage.stopBgm();
             player.saveMaxScore();
             currentPage = new Page("game!");
             player.saveGame();
@@ -219,6 +222,16 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
         if(currentPage.isMuted()) speakerType = "Image/Speaker-Crossed.png";
         g.drawImage(readImage(speakerType),getWidth()-getWidth()/5,getHeight()/10,getWidth()/16,getHeight()/14,this);
         currentPage.getCurrentButtons().get(currentPage.getCurrentButtons().size()-1).setRec(getWidth()-getWidth()/5,getHeight()/10,getWidth()/16,getHeight()/14);
+        if(specialEffects!=null)
+        {
+            if(!specialEffects.isRunning()){
+                specialEffects = null;
+                currentFishes.clear();
+            }
+            else{
+                g.drawImage(specialEffects.getImage(),getWidth()/4,getHeight()/5,getWidth()/2,getHeight()-getHeight()/10,this);
+            }
+        }
     }
     public void paintFinish(Graphics g)
     {
@@ -735,7 +748,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,ActionListe
            count++;
            if(count%10==0)
            {
-               if(player.getPointChange()>0) effects.playSoundEffect("pointGained.wav");
+               if(player.getPointChange() <-10) {
+                   specialEffects = new SFXUtil("explosion");
+                   effects.playSoundEffect("hugeExplosion.wav");
+               }
+               else if(player.getPointChange()>0) effects.playSoundEffect("pointGained.wav");
                else if(player.getPointChange()<0) effects.playSoundEffect("bombEffect.wav");
                player.resetPointChange();
            }
